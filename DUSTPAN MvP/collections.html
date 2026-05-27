@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dustpan - Collections</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f5f7f6;
+    }
+
+    .card{
+      background:white;
+      border-radius:20px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+      transition:0.3s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-3px);
+    }
+
+    .green{
+      color:#0B7A3B;
+    }
+
+    .bg-green-custom{
+      background:#0B7A3B;
+    }
+
+    .sidebar-item:hover{
+      background:#ecfdf3;
+      color:#0B7A3B;
+    }
+
+    .status-verified{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .status-pending{
+      background:#fef9c3;
+      color:#854d0e;
+    }
+
+    .status-failed{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .graph-bar{
+      height:120px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+
+    .bar{
+      width:40px;
+      background:#0B7A3B;
+      border-radius:10px 10px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-white shadow-lg p-6 hidden md:block">
+
+    <h1 class="text-3xl font-bold green mb-10">
+      Dustpan
+    </h1>
+
+    <nav class="space-y-4">
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Dashboard
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Customers
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl bg-green-50 text-green-700 font-semibold">
+        Collections
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Waiver Requests
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Staff Management
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Reports
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Audit Logs
+      </div>
+
+      <div class="sidebar-item p-3 rounded-xl cursor-pointer">
+        Settings
+      </div>
+
+    </nav>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-6">
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+
+      <div>
+        <h2 class="text-3xl font-bold">
+          Collections
+        </h2>
+
+        <p class="text-gray-500 mt-1">
+          Track payments, field collections, and operational revenue.
+        </p>
+      </div>
+
+      <div class="flex gap-3">
+
+        <select class="p-3 rounded-xl border border-gray-200">
+          <option>This Week</option>
+          <option>Today</option>
+          <option>This Month</option>
+        </select>
+
+        <button class="bg-green-custom text-white px-5 py-3 rounded-xl hover:opacity-90">
+          Export Report
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="mb-8">
+      <input
+        type="text"
+        placeholder="Search collections..."
+        class="w-full p-4 rounded-xl border border-gray-200"
+      />
+    </div>
+
+    <!-- ANALYTICS CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+      <div class="card p-6">
+        <p class="text-gray-500">Today's Collections</p>
+        <h3 class="text-3xl font-bold mt-2 green">₦245,000</h3>
+      </div>
+
+      <div class="card p-6">
+        <p class="text-gray-500">Weekly Revenue</p>
+        <h3 class="text-3xl font-bold mt-2">₦1.24M</h3>
+      </div>
+
+      <div class="card p-6">
+        <p class="text-gray-500">Outstanding Debt</p>
+        <h3 class="text-3xl font-bold mt-2 text-red-600">₦12.5M</h3>
+      </div>
+
+      <div class="card p-6">
+        <p class="text-gray-500">Collection Success Rate</p>
+        <h3 class="text-3xl font-bold mt-2">87%</h3>
+      </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- COLLECTION TABLE -->
+      <div class="lg:col-span-2 card p-6 overflow-x-auto">
+
+        <div class="flex justify-between items-center mb-6">
+
+          <h3 class="text-xl font-bold">
+            Collection Records
+          </h3>
+
+          <button class="bg-green-custom text-white px-4 py-2 rounded-xl">
+            + Record Payment
+          </button>
+
+        </div>
+
+        <table class="w-full">
+
+          <thead>
+            <tr class="text-left border-b">
+              <th class="pb-4">Collector</th>
+              <th class="pb-4">Customer</th>
+              <th class="pb-4">Zone</th>
+              <th class="pb-4">Amount</th>
+              <th class="pb-4">Method</th>
+              <th class="pb-4">Date</th>
+              <th class="pb-4">Receipt</th>
+              <th class="pb-4">Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr class="border-b hover:bg-gray-50">
+
+              <td class="py-4">John A.</td>
+              <td>Henry Apartment</td>
+              <td>Ikotun</td>
+              <td class="font-semibold">₦25,000</td>
+              <td>Cash</td>
+              <td>27 May 2026</td>
+
+              <td>
+                <span class="status-verified px-3 py-1 rounded-full text-sm">
+                  Verified
+                </span>
+              </td>
+
+              <td>
+                <span class="status-verified px-3 py-1 rounded-full text-sm">
+                  Successful
+                </span>
+              </td>
+
+            </tr>
+
+            <tr class="border-b hover:bg-gray-50">
+
+              <td class="py-4">Mary O.</td>
+              <td>Grace Hotel</td>
+              <td>Lekki</td>
+              <td class="font-semibold">₦50,000</td>
+              <td>POS</td>
+              <td>27 May 2026</td>
+
+              <td>
+                <span class="status-pending px-3 py-1 rounded-full text-sm">
+                  Pending
+                </span>
+              </td>
+
+              <td>
+                <span class="status-pending px-3 py-1 rounded-full text-sm">
+                  Pending
+                </span>
+              </td>
+
+            </tr>
+
+            <tr class="hover:bg-gray-50">
+
+              <td class="py-4">David K.</td>
+              <td>Royal Estate</td>
+              <td>Yaba</td>
+              <td class="font-semibold">₦35,000</td>
+              <td>Transfer</td>
+              <td>26 May 2026</td>
+
+              <td>
+                <span class="status-failed px-3 py-1 rounded-full text-sm">
+                  Failed
+                </span>
+              </td>
+
+              <td>
+                <span class="status-failed px-3 py-1 rounded-full text-sm">
+                  Failed
+                </span>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="space-y-6">
+
+        <!-- GRAPH -->
+        <div class="card p-6">
+
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg">
+              Revenue Trend
+            </h3>
+
+            <span class="text-sm text-gray-500">
+              This Week
+            </span>
+          </div>
+
+          <div class="graph-bar">
+            <div class="bar" style="height:50px;"></div>
+            <div class="bar" style="height:80px;"></div>
+            <div class="bar" style="height:70px;"></div>
+            <div class="bar" style="height:110px;"></div>
+            <div class="bar" style="height:90px;"></div>
+          </div>
+
+        </div>
+
+        <!-- LEADERBOARD -->
+        <div class="card p-6">
+
+          <h3 class="font-bold text-lg mb-4">
+            Top Collectors
+          </h3>
+
+          <ul class="space-y-3">
+
+            <li class="flex justify-between">
+              <span>John A.</span>
+              <span class="green font-bold">₦420K</span>
+            </li>
+
+            <li class="flex justify-between">
+              <span>Mary O.</span>
+              <span class="green font-bold">₦380K</span>
+            </li>
+
+            <li class="flex justify-between">
+              <span>David K.</span>
+              <span class="green font-bold">₦290K</span>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <!-- FRAUD ALERT -->
+        <div class="card p-6 border-l-4 border-red-500">
+
+          <h3 class="font-bold text-lg text-red-600 mb-3">
+            Fraud Alert
+          </h3>
+
+          <p class="text-gray-600 text-sm">
+            Multiple failed receipt verifications detected in Ikotun zone today.
+          </p>
+
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="card p-6">
+
+          <h3 class="font-bold text-lg mb-4">
+            Quick Actions
+          </h3>
+
+          <div class="space-y-3">
+
+            <button class="w-full bg-green-custom text-white p-3 rounded-xl">
+              Record Payment
+            </button>
+
+            <button class="w-full border border-green-700 text-green-700 p-3 rounded-xl">
+              Verify Receipt
+            </button>
+
+            <button class="w-full border border-green-700 text-green-700 p-3 rounded-xl">
+              Generate Report
+            </button>
+
+            <button class="w-full border border-green-700 text-green-700 p-3 rounded-xl">
+              Notify Customer
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

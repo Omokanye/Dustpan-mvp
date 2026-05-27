@@ -1,0 +1,203 @@
+<!--
+  DUSTPAN — Dashboard Overview Page
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUSTPAN — Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
+          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<div class="flex min-h-screen">
+
+  <!-- ============== SIDEBAR ============== -->
+  <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-slate-200 -translate-x-full lg:translate-x-0 transition-transform">
+    <div class="h-16 flex items-center gap-2 px-6 border-b border-slate-200">
+      <div class="w-9 h-9 rounded-lg bg-brand grid place-items-center text-white">🧹</div>
+      <span class="text-lg font-bold text-brand">DUSTPAN</span>
+    </div>
+    <nav class="p-4 space-y-1 text-sm">
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand/10 text-brand font-semibold">📊 <span>Dashboard</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">👥 <span>Customers</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">🚛 <span>Collections</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">💳 <span>Payments</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">📝 <span>Waivers</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">👷 <span>Staff</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">📈 <span>Reports</span></a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100">⚙️ <span>Settings</span></a>
+    </nav>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/30 z-30 hidden lg:hidden"></div>
+
+  <!-- ============== MAIN ============== -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- Topbar -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-20">
+      <div class="flex items-center gap-3 flex-1">
+        <button id="menuBtn" class="lg:hidden p-2 rounded-lg hover:bg-slate-100">☰</button>
+        <div class="relative max-w-md w-full hidden sm:block">
+          <input type="text" placeholder="Search customers, collections..."
+            class="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-100 border-0 focus:bg-white focus:ring-2 focus:ring-brand/30 outline-none text-sm" />
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="relative p-2 rounded-lg hover:bg-slate-100">
+          🔔 <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-full bg-brand text-white grid place-items-center font-semibold">JD</div>
+          <div class="hidden sm:block leading-tight">
+            <p class="text-sm font-semibold">John Doe</p>
+            <p class="text-xs text-slate-500">Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="p-4 sm:p-6 space-y-6 flex-1">
+
+      <!-- Heading -->
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">Dashboard Overview</h1>
+        <p class="text-slate-500 text-sm mt-1">Welcome back, here's what's happening today.</p>
+      </div>
+
+      <!-- Stats cards -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card template -->
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-xl bg-brand/10 text-brand grid place-items-center">🚛</span>
+            <span class="text-xs font-semibold text-emerald-600">▲ 12%</span>
+          </div>
+          <p class="text-2xl font-bold mt-4">1,284</p>
+          <p class="text-sm text-slate-500">Total Collections</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-xl bg-red-50 text-red-500 grid place-items-center">💰</span>
+            <span class="text-xs font-semibold text-red-500">▼ 4%</span>
+          </div>
+          <p class="text-2xl font-bold mt-4">$24,560</p>
+          <p class="text-sm text-slate-500">Outstanding Debt</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 grid place-items-center">📝</span>
+            <span class="text-xs font-semibold text-emerald-600">▲ 8%</span>
+          </div>
+          <p class="text-2xl font-bold mt-4">37</p>
+          <p class="text-sm text-slate-500">Pending Waivers</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 grid place-items-center">👷</span>
+            <span class="text-xs font-semibold text-emerald-600">▲ 2</span>
+          </div>
+          <p class="text-2xl font-bold mt-4">48</p>
+          <p class="text-sm text-slate-500">Active Staff</p>
+        </div>
+      </section>
+
+      <!-- Chart + Quick actions -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold">Collection Trends</h3>
+            <select class="text-sm border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-brand/30">
+              <option>Last 7 days</option><option>Last 30 days</option>
+            </select>
+          </div>
+          <!-- Simple SVG chart -->
+          <svg viewBox="0 0 500 200" class="w-full h-48">
+            <defs>
+              <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#0B7A3B" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#0B7A3B" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polyline fill="url(#g)" stroke="none"
+              points="0,150 70,120 140,140 210,80 280,100 350,60 420,90 500,40 500,200 0,200"/>
+            <polyline fill="none" stroke="#0B7A3B" stroke-width="3"
+              points="0,150 70,120 140,140 210,80 280,100 350,60 420,90 500,40"/>
+          </svg>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <h3 class="font-semibold mb-4">Quick Actions</h3>
+          <div class="space-y-2">
+            <button class="w-full text-left px-4 py-3 rounded-xl bg-brand text-white hover:bg-brand-dark transition flex items-center gap-2">🚛 Record Collection</button>
+            <button class="w-full text-left px-4 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 flex items-center gap-2">✅ Approve Waiver</button>
+            <button class="w-full text-left px-4 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 flex items-center gap-2">➕ Add Customer</button>
+            <button class="w-full text-left px-4 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 flex items-center gap-2">📄 Generate Report</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Waivers table + Activity -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-soft border border-slate-100 overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold">Pending Waivers</h3>
+            <a href="#" class="text-sm text-brand font-medium hover:underline">View all</a>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="text-left text-slate-500 border-b border-slate-200">
+                <tr><th class="py-2">Customer</th><th>Amount</th><th>Date</th><th>Status</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr><td class="py-3">Acme Co.</td><td>$240</td><td>May 24</td><td><span class="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-700">Pending</span></td></tr>
+                <tr><td class="py-3">Globex</td><td>$180</td><td>May 23</td><td><span class="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-700">Pending</span></td></tr>
+                <tr><td class="py-3">Initech</td><td>$420</td><td>May 22</td><td><span class="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">Review</span></td></tr>
+                <tr><td class="py-3">Umbrella</td><td>$95</td><td>May 21</td><td><span class="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-700">Pending</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100">
+          <h3 class="font-semibold mb-4">Staff Activity</h3>
+          <ul class="space-y-4 text-sm">
+            <li class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-brand/10 text-brand grid place-items-center font-semibold">MK</div>
+              <div><p><b>Mike K.</b> recorded 12 collections</p><p class="text-slate-500 text-xs">10 minutes ago</p></div>
+            </li>
+            <li class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 grid place-items-center font-semibold">SR</div>
+              <div><p><b>Sara R.</b> approved a waiver</p><p class="text-slate-500 text-xs">1 hour ago</p></div>
+            </li>
+            <li class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-amber-100 text-amber-600 grid place-items-center font-semibold">TJ</div>
+              <div><p><b>Tom J.</b> added a new customer</p><p class="text-slate-500 text-xs">3 hours ago</p></div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

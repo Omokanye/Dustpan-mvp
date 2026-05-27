@@ -1,0 +1,18 @@
+/* DUSTPAN — Custom styles (supplementing Tailwind CDN) */
+
+:root {
+  --brand: #0B7A3B;
+  --brand-dark: #085C2C;
+  --brand-light: #10A050;
+}
+
+html { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+/* Smooth scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Card hover lift */
+.shadow-soft { transition: transform .2s ease, box-shadow .2s ease; }
+.shadow-soft:hover { transform: translateY(-2px); }
