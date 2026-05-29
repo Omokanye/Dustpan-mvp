@@ -1,1 +1,199 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dustpan — Payments</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#0B7A3B',
+              dark: '#075A2B',
+              light: '#E8F5EC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-white border-r border-slate-200 hidden lg:block">
+
+    <div class="h-16 flex items-center gap-3 px-6 border-b">
+      <img src="assets/logo.png" class="w-10 h-10 object-contain">
+      <h1 class="font-bold text-brand text-xl">DUSTPAN</h1>
+    </div>
+
+    <nav class="p-4 space-y-2 text-sm">
+
+      <a href="dashboard.html" class="block px-4 py-3 rounded-lg hover:bg-slate-100">📊 Dashboard</a>
+
+      <a href="customers.html" class="block px-4 py-3 rounded-lg hover:bg-slate-100">👥 Customers</a>
+
+      <a href="collections.html" class="block px-4 py-3 rounded-lg hover:bg-slate-100">🚛 Collections</a>
+
+      <a href="payments.html" class="block px-4 py-3 rounded-lg bg-brand text-white font-semibold">💳 Payments</a>
+
+      <a href="waivers.html" class="block px-4 py-3 rounded-lg hover:bg-slate-100">📝 Waivers</a>
+
+      <a href="reports.html" class="block px-4 py-3 rounded-lg hover:bg-slate-100">📈 Reports</a>
+
+      <a href="settings.html" class="block px-4 py-3 rounded-lg hover:bg-slate-100">⚙️ Settings</a>
+
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-6">
+
+    <!-- TOP BAR -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+
+      <div>
+        <h2 class="text-3xl font-bold text-slate-800">Payments</h2>
+        <p class="text-slate-500">
+          Monitor transactions, verify receipts, and track operational revenue.
+        </p>
+      </div>
+
+      <div class="flex gap-3">
+        <input type="date"
+          class="px-4 py-2 rounded-lg border border-slate-300 bg-white">
+
+        <button class="bg-brand text-white px-5 py-2 rounded-lg hover:bg-brand-dark transition">
+          Export Report
+        </button>
+      </div>
+    </div>
+
+    <!-- ANALYTICS CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+
+      <div class="bg-white rounded-2xl p-5 shadow-sm">
+        <p class="text-slate-500 text-sm">Total Revenue</p>
+        <h3 class="text-3xl font-bold mt-2">₦8.4M</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 shadow-sm">
+        <p class="text-slate-500 text-sm">Pending Payments</p>
+        <h3 class="text-3xl font-bold mt-2">₦1.2M</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 shadow-sm">
+        <p class="text-slate-500 text-sm">Failed Transactions</p>
+        <h3 class="text-3xl font-bold mt-2">23</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 shadow-sm">
+        <p class="text-slate-500 text-sm">Verified Receipts</p>
+        <h3 class="text-3xl font-bold mt-2">1,240</h3>
+      </div>
+
+    </div>
+
+    <!-- PAYMENTS TABLE -->
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+
+      <div class="p-5 border-b flex flex-col lg:flex-row gap-4 justify-between">
+
+        <input type="text"
+          placeholder="Search payment..."
+          class="px-4 py-2 rounded-lg border border-slate-300 w-full lg:w-80">
+
+        <button class="bg-brand text-white px-5 py-2 rounded-lg hover:bg-brand-dark transition">
+          + Record Payment
+        </button>
+
+      </div>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+          <thead class="bg-slate-50 text-slate-500">
+
+            <tr>
+              <th class="text-left px-6 py-4">Customer</th>
+              <th class="text-left px-6 py-4">Amount</th>
+              <th class="text-left px-6 py-4">Method</th>
+              <th class="text-left px-6 py-4">Collector</th>
+              <th class="text-left px-6 py-4">Date</th>
+              <th class="text-left px-6 py-4">Status</th>
+              <th class="text-left px-6 py-4">Receipt ID</th>
+              <th class="text-left px-6 py-4">Action</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr class="border-b hover:bg-slate-50">
+
+              <td class="px-6 py-4 font-medium">Adewale Stores</td>
+              <td class="px-6 py-4">₦35,000</td>
+              <td class="px-6 py-4">Transfer</td>
+              <td class="px-6 py-4">Tunde A.</td>
+              <td class="px-6 py-4">29 May 2026</td>
+
+              <td class="px-6 py-4">
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                  Verified
+                </span>
+              </td>
+
+              <td class="px-6 py-4">DSP-2048</td>
+
+              <td class="px-6 py-4">
+                <button class="text-brand font-medium hover:underline">
+                  View
+                </button>
+              </td>
+
+            </tr>
+
+            <tr class="border-b hover:bg-slate-50">
+
+              <td class="px-6 py-4 font-medium">Ikeja Plaza</td>
+              <td class="px-6 py-4">₦12,000</td>
+              <td class="px-6 py-4">Cash</td>
+              <td class="px-6 py-4">Bola K.</td>
+              <td class="px-6 py-4">28 May 2026</td>
+
+              <td class="px-6 py-4">
+                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
+                  Pending
+                </span>
+              </td>
+
+              <td class="px-6 py-4">DSP-2011</td>
+
+              <td class="px-6 py-4">
+                <button class="text-brand font-medium hover:underline">
+                  Verify
+                </button>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>
