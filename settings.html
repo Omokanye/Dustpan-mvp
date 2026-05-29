@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dustpan — Settings</title>
 
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
@@ -12,130 +13,154 @@
       theme: {
         extend: {
           colors: {
-            brand: '#0B7A3B'
+            brand: "#0B7A3B"
           }
         }
       }
     }
   </script>
-
-
 </head>
 
 <body class="bg-slate-100 min-h-screen flex">
 
   <!-- SIDEBAR -->
-  <aside class="w-64 bg-white shadow-lg p-6 hidden md:block">
+  <aside class="w-64 bg-white shadow-lg p-6 hidden md:flex flex-col">
 
     <!-- LOGO -->
-    <a href="dashboard.html"
-      class="flex items-center gap-3 mb-10">
-
-      <img src="assets/logo.png"
+    <a href="dashboard.html" class="flex items-center gap-3 mb-10">
+      <img 
+        src="assets/logo.png" 
         alt="Dustpan Logo"
-        class="w-12 h-12 object-contain" />
+        class="w-12 h-12 object-contain"
+      />
 
-      <h1 class="text-3xl font-bold text-green-700">
+      <h1 class="text-2xl font-bold text-brand">
         Dustpan
       </h1>
-
     </a>
 
-<!-- CUSTOMER ACCESS -->
-<a href="customer-register.html"
-  class="block p-3 rounded-xl hover:bg-slate-100">
+    <!-- NAVIGATION -->
+    <nav class="space-y-2 text-slate-700 text-sm">
 
-  ♻️ Become a Customer
+      <a href="dashboard.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        📊 Dashboard
+      </a>
 
-</a>
+      <a href="customers.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        👥 Customers
+      </a>
 
-<!-- STAFF REGISTRATION -->
-<a href="staff-register.html"
-  class="block p-3 rounded-xl hover:bg-slate-100">
+      <a href="collections.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        🚛 Collections
+      </a>
 
-  👷 Register Staff
+      <a href="payments.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        💳 Payments
+      </a>
 
-</a>
-  </aside>
+      <a href="waivers.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        📝 Waivers
+      </a>
 
-  <!-- MAIN CONTENT -->
-  <main class="flex-1 p-8">
+      <a href="staffs.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        👷 Staffs
+      </a>
 
-    <!-- TOP HEADER -->
-<header class="bg-white rounded-2xl shadow-sm px-6 py-4 mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <a href="reports.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        📈 Reports
+      </a>
 
-  <!-- LEFT -->
-  <div>
+      <a href="auditlogs.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        🛡️ Audit Logs
+      </a>
 
-    <h2 class="text-3xl font-bold text-slate-800">
-      Settings
-    </h2>
+      <a href="settings.html"
+        class="block p-3 rounded-xl bg-green-50 text-brand font-semibold">
+        ⚙️ Settings
+      </a>
 
-    <p class="text-slate-500 mt-1">
-      Manage company operations, account switching, staff onboarding and customer access.
-    </p>
+      <!-- DIVIDER -->
+      <div class="border-t border-slate-200 my-4"></div>
 
-  </div>
+      <!-- EXTRA ACCESS -->
+      <a href="customer-register.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        ♻️ Become a Customer
+      </a>
 
-  <!-- RIGHT ACTIONS -->
-  <div class="flex flex-wrap gap-3">
+      <a href="staff-register.html"
+        class="block p-3 rounded-xl hover:bg-slate-100 transition">
+        👤 Register Staff
+      </a>
 
-    <!-- BECOME CUSTOMER -->
-    <a href="customer-register.html"
-      class="flex items-center gap-2 bg-green-50 text-green-700 px-5 py-3 rounded-xl hover:bg-green-100 transition font-medium shadow-sm">
-
-      ♻️
-      <span>Become a Customer</span>
-
-    </a>
-
-    <!-- REGISTER STAFF -->
-    <a href="staff-register.html"
-      class="flex items-center gap-2 bg-slate-100 text-slate-700 px-5 py-3 rounded-xl hover:bg-slate-200 transition font-medium shadow-sm">
-
-      👷
-      <span>Register Staff</span>
-
-    </a>
-
-    <!-- SWITCH ACCOUNT -->
-    <button
-      class="flex items-center gap-2 bg-brand text-white px-5 py-3 rounded-xl hover:bg-green-800 transition font-medium shadow-sm">
-
-      🔄
-      <span>Switch Account</span>
-
-    </button>
+    </nav>
 
     <!-- LOGOUT -->
-    <button
-      class="flex items-center gap-2 bg-red-500 text-white px-5 py-3 rounded-xl hover:bg-red-700 transition font-medium shadow-sm">
+    <div class="mt-auto pt-6">
 
-      🚪
-      <span>Logout</span>
-
-    </button>
-
-  </div>
-
-</header>
-    <div class="mb-8">
-
-      <h2 class="text-3xl font-bold text-slate-800">
-        Settings
-      </h2>
-
-      <p class="text-slate-500 mt-2">
-        Manage company information, staff permissions, operational targets, and system preferences.
-      </p>
+      <button
+        class="w-full bg-red-500 hover:bg-red-700 text-white py-3 rounded-xl transition font-medium">
+        Logout
+      </button>
 
     </div>
 
-    <!-- SETTINGS GRID -->
-    <div class="grid lg:grid-cols-2 gap-8">
+  </aside>
 
-      <!-- COMPANY SETTINGS -->
-      <div class="bg-white rounded-2xl shadow p-6">
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+
+    <!-- TOP HEADER -->
+    <header class="bg-white rounded-2xl shadow-sm p-6 mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+      <!-- LEFT -->
+      <div>
+
+        <h2 class="text-3xl font-bold text-slate-800">
+          Settings
+        </h2>
+
+        <p class="text-slate-500 mt-2">
+          Manage company operations, business profile, staff controls and operational targets.
+        </p>
+
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="flex flex-wrap gap-3">
+
+        <a href="customer-register.html"
+          class="bg-green-50 text-brand px-5 py-3 rounded-xl hover:bg-green-100 transition font-medium shadow-sm">
+          ♻️ Become a Customer
+        </a>
+
+        <a href="staff-register.html"
+          class="bg-slate-100 text-slate-700 px-5 py-3 rounded-xl hover:bg-slate-200 transition font-medium shadow-sm">
+          👷 Register Staff
+        </a>
+
+        <button
+          class="bg-brand text-white px-5 py-3 rounded-xl hover:bg-green-800 transition font-medium shadow-sm">
+          🔄 Switch Account
+        </button>
+
+      </div>
+
+    </header>
+
+    <!-- SETTINGS GRID -->
+    <div class="grid lg:grid-cols-2 gap-6">
+
+      <!-- COMPANY INFO -->
+      <section class="bg-white rounded-2xl shadow-sm p-6">
 
         <h3 class="text-xl font-bold mb-6">
           Company Information
@@ -148,9 +173,11 @@
               Business Name
             </label>
 
-            <input type="text"
+            <input 
+              type="text"
               placeholder="Dustpan Waste Services"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
           <div>
@@ -158,9 +185,11 @@
               Company Email
             </label>
 
-            <input type="email"
+            <input 
+              type="email"
               placeholder="company@email.com"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
           <div>
@@ -168,9 +197,11 @@
               Company Address
             </label>
 
-            <input type="text"
-              placeholder="Enter address"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+            <input 
+              type="text"
+              placeholder="Enter business address"
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
           <div>
@@ -178,23 +209,26 @@
               Upload Company Logo
             </label>
 
-            <input type="file"
-              class="w-full border border-slate-300 rounded-xl p-3 bg-white">
+            <input 
+              type="file"
+              class="w-full border border-slate-300 rounded-xl p-3 bg-white"
+            />
           </div>
 
-          <button class="bg-brand text-white px-6 py-3 rounded-xl hover:bg-green-800 transition">
+          <button
+            class="bg-brand hover:bg-green-800 text-white px-6 py-3 rounded-xl transition">
             Save Company Settings
           </button>
 
         </div>
 
-      </div>
+      </section>
 
       <!-- CEO PROFILE -->
-      <div class="bg-white rounded-2xl shadow p-6">
+      <section class="bg-white rounded-2xl shadow-sm p-6">
 
         <h3 class="text-xl font-bold mb-6">
-          CEO Profile Settings
+          CEO Profile
         </h3>
 
         <div class="space-y-4">
@@ -204,18 +238,11 @@
               Full Name
             </label>
 
-            <input type="text"
-              placeholder="CEO Name"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
-          </div>
-
-          <div>
-            <label class="block mb-2 text-sm font-medium">
-              Profile Image
-            </label>
-
-            <input type="file"
-              class="w-full border border-slate-300 rounded-xl p-3 bg-white">
+            <input 
+              type="text"
+              placeholder="Enter full name"
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
           <div>
@@ -223,24 +250,38 @@
               Phone Number
             </label>
 
-            <input type="text"
+            <input 
+              type="text"
               placeholder="+234..."
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
-          <button class="bg-brand text-white px-6 py-3 rounded-xl hover:bg-green-800 transition">
+          <div>
+            <label class="block mb-2 text-sm font-medium">
+              Profile Image
+            </label>
+
+            <input 
+              type="file"
+              class="w-full border border-slate-300 rounded-xl p-3 bg-white"
+            />
+          </div>
+
+          <button
+            class="bg-brand hover:bg-green-800 text-white px-6 py-3 rounded-xl transition">
             Update Profile
           </button>
 
         </div>
 
-      </div>
+      </section>
 
       <!-- TARGET SETTINGS -->
-      <div class="bg-white rounded-2xl shadow p-6">
+      <section class="bg-white rounded-2xl shadow-sm p-6">
 
         <h3 class="text-xl font-bold mb-6">
-          Monthly Targets
+          Operational Targets
         </h3>
 
         <div class="space-y-4">
@@ -250,9 +291,11 @@
               Monthly Revenue Target
             </label>
 
-            <input type="number"
+            <input 
+              type="number"
               placeholder="₦5,000,000"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
           <div>
@@ -260,9 +303,11 @@
               Debt Recovery Target
             </label>
 
-            <input type="number"
+            <input 
+              type="number"
               placeholder="₦1,000,000"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
           <div>
@@ -270,21 +315,24 @@
               Collection Target Per Staff
             </label>
 
-            <input type="number"
+            <input 
+              type="number"
               placeholder="₦150,000"
-              class="w-full border border-slate-300 rounded-xl p-4 outline-none focus:border-brand">
+              class="w-full border border-slate-300 rounded-xl p-4 focus:border-brand outline-none"
+            />
           </div>
 
-          <button class="bg-brand text-white px-6 py-3 rounded-xl hover:bg-green-800 transition">
+          <button
+            class="bg-brand hover:bg-green-800 text-white px-6 py-3 rounded-xl transition">
             Save Targets
           </button>
 
         </div>
 
-      </div>
+      </section>
 
       <!-- STAFF CONTROL -->
-      <div class="bg-white rounded-2xl shadow p-6">
+      <section class="bg-white rounded-2xl shadow-sm p-6">
 
         <h3 class="text-xl font-bold mb-6">
           Staff Control Panel
@@ -292,7 +340,8 @@
 
         <div class="space-y-4">
 
-          <div class="border rounded-xl p-4 flex items-center justify-between">
+          <!-- STAFF CARD -->
+          <div class="border border-slate-200 rounded-xl p-4 flex items-center justify-between">
 
             <div>
               <h4 class="font-semibold">
@@ -304,13 +353,15 @@
               </p>
             </div>
 
-            <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+            <button
+              class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition">
               Suspend
             </button>
 
           </div>
 
-          <div class="border rounded-xl p-4 flex items-center justify-between">
+          <!-- STAFF CARD -->
+          <div class="border border-slate-200 rounded-xl p-4 flex items-center justify-between">
 
             <div>
               <h4 class="font-semibold">
@@ -322,13 +373,15 @@
               </p>
             </div>
 
-            <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">
+            <button
+              class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition">
               Review
             </button>
 
           </div>
 
-          <div class="border rounded-xl p-4 flex items-center justify-between">
+          <!-- STAFF CARD -->
+          <div class="border border-slate-200 rounded-xl p-4 flex items-center justify-between">
 
             <div>
               <h4 class="font-semibold">
@@ -340,7 +393,8 @@
               </p>
             </div>
 
-            <button class="bg-slate-700 text-white px-4 py-2 rounded-lg hover:bg-black transition">
+            <button
+              class="bg-slate-700 hover:bg-black text-white px-4 py-2 rounded-lg transition">
               Remove
             </button>
 
@@ -348,12 +402,11 @@
 
         </div>
 
-      </div>
+      </section>
 
     </div>
 
   </main>
 
 </body>
-</html>
-```
+              </html>
