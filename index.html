@@ -27,6 +27,71 @@
   </script>
 </head>
 <body class="min-h-screen bg-white text-slate-800">
+  <!-- ========== TOP NAVBAR ========== -->
+<header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- LOGO -->
+    <a href="dashboard.html"
+      class="flex items-center gap-3">
+
+      <img src="assets/logo.png"
+        alt="Dustpan Logo"
+        class="w-12 h-12 object-contain" />
+
+      <div>
+        <h1 class="text-2xl font-bold text-green-700">
+          Dustpan
+        </h1>
+
+        <p class="text-xs text-slate-500">
+          Waste Recovery & Operations
+        </p>
+      </div>
+
+    </a>
+
+    <!-- NAVIGATION -->
+    <nav class="hidden md:flex items-center gap-4">
+
+      <!-- PSP OPERATOR -->
+      <a href="psp-register.html"
+        class="px-5 py-3 rounded-xl bg-green-700 text-white hover:bg-green-800 transition font-medium">
+
+        Register as PSP Operator
+
+      </a>
+
+      <!-- STAFF -->
+      <a href="staff-register.html"
+        class="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium">
+
+        Become a Staff
+
+      </a>
+
+      <!-- CUSTOMER -->
+      <a href="customer-signup.html"
+        class="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium">
+
+        Become a Customer
+
+      </a>
+
+      <!-- LOGIN -->
+      <a href="login.html"
+        class="px-5 py-3 rounded-xl bg-slate-900 text-white hover:bg-black transition font-medium">
+
+        Login
+
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
 
   <!-- ============== LOGIN LAYOUT ============== -->
   <main class="min-h-screen grid lg:grid-cols-2">
