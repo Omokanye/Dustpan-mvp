@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +19,64 @@
       }
     }
   </script>
+  <!-- TOP HEADER -->
+<header class="bg-white rounded-2xl shadow-sm px-6 py-4 mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+  <!-- LEFT -->
+  <div>
+
+    <h2 class="text-3xl font-bold text-slate-800">
+      Settings
+    </h2>
+
+    <p class="text-slate-500 mt-1">
+      Manage company operations, account switching, staff onboarding and customer access.
+    </p>
+
+  </div>
+
+  <!-- RIGHT ACTIONS -->
+  <div class="flex flex-wrap gap-3">
+
+    <!-- BECOME CUSTOMER -->
+    <a href="customer-register.html"
+      class="flex items-center gap-2 bg-green-50 text-green-700 px-5 py-3 rounded-xl hover:bg-green-100 transition font-medium shadow-sm">
+
+      ♻️
+      <span>Become a Customer</span>
+
+    </a>
+
+    <!-- REGISTER STAFF -->
+    <a href="staff-register.html"
+      class="flex items-center gap-2 bg-slate-100 text-slate-700 px-5 py-3 rounded-xl hover:bg-slate-200 transition font-medium shadow-sm">
+
+      👷
+      <span>Register Staff</span>
+
+    </a>
+
+    <!-- SWITCH ACCOUNT -->
+    <button
+      class="flex items-center gap-2 bg-brand text-white px-5 py-3 rounded-xl hover:bg-green-800 transition font-medium shadow-sm">
+
+      🔄
+      <span>Switch Account</span>
+
+    </button>
+
+    <!-- LOGOUT -->
+    <button
+      class="flex items-center gap-2 bg-red-500 text-white px-5 py-3 rounded-xl hover:bg-red-700 transition font-medium shadow-sm">
+
+      🚪
+      <span>Logout</span>
+
+    </button>
+
+  </div>
+
+</header>
 
 </head>
 
@@ -41,56 +99,21 @@
 
     </a>
 
-    <!-- NAVIGATION -->
-    <nav class="space-y-4">
+<!-- CUSTOMER ACCESS -->
+<a href="customer-register.html"
+  class="block p-3 rounded-xl hover:bg-slate-100">
 
-      <a href="dashboard.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        📊 Dashboard
-      </a>
+  ♻️ Become a Customer
 
-      <a href="customers.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        👥 Customers
-      </a>
+</a>
 
-      <a href="collections.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        🚛 Collections
-      </a>
+<!-- STAFF REGISTRATION -->
+<a href="staff-register.html"
+  class="block p-3 rounded-xl hover:bg-slate-100">
 
-      <a href="payments.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        💳 Payments
-      </a>
+  👷 Register Staff
 
-      <a href="waivers.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        📝 Waivers
-      </a>
-
-      <a href="staffs.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        👷 Staffs
-      </a>
-
-      <a href="reports.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        📈 Reports
-      </a>
-
-      <a href="auditlogs.html"
-        class="block p-3 rounded-xl hover:bg-slate-100">
-        🛡️ Audit Logs
-      </a>
-
-      <a href="settings.html"
-        class="block p-3 rounded-xl bg-green-50 text-green-700 font-semibold">
-        ⚙️ Settings
-      </a>
-
-    </nav>
-
+</a>
   </aside>
 
   <!-- MAIN CONTENT -->
