@@ -1,1 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dustpan — Staff Management</title>
 
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0B7A3B'
+      }
+    }
+  }
+}
+</script>
+
+</head>
+
+<body class="bg-slate-100 min-h-screen flex">
+
+<!-- SIDEBAR -->
+<aside class="w-64 bg-white shadow-lg hidden md:flex flex-col p-6">
+
+  <!-- LOGO -->
+  <a href="dashboard.html" class="flex items-center gap-3 mb-10">
+
+    <img src="assets/logo.png"
+      alt="Dustpan Logo"
+      class="w-12 h-12 object-contain">
+
+    <h1 class="text-2xl font-bold text-brand">
+      Dustpan
+    </h1>
+
+  </a>
+
+  <!-- MENU -->
+  <nav class="space-y-2">
+
+    <a href="dashboard.html" class="block p-3 rounded-xl hover:bg-slate-100">📊 Dashboard</a>
+
+    <a href="customers.html" class="block p-3 rounded-xl hover:bg-slate-100">👥 Customers</a>
+
+    <a href="collections.html" class="block p-3 rounded-xl hover:bg-slate-100">🚛 Collections</a>
+
+    <a href="payments.html" class="block p-3 rounded-xl hover:bg-slate-100">💳 Payments</a>
+
+    <a href="waivers.html" class="block p-3 rounded-xl hover:bg-slate-100">📝 Waivers</a>
+
+    <a href="staffs.html"
+      class="block p-3 rounded-xl bg-green-50 text-brand font-semibold">
+      👷 Staff Management
+    </a>
+
+    <a href="reports.html" class="block p-3 rounded-xl hover:bg-slate-100">📈 Reports</a>
+
+    <a href="auditlogs.html" class="block p-3 rounded-xl hover:bg-slate-100">🛡 Audit Logs</a>
+
+    <a href="settings.html" class="block p-3 rounded-xl hover:bg-slate-100">⚙ Settings</a>
+
+  </nav>
+
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="flex-1 p-4 md:p-8">
+
+  <!-- PAGE HEADER -->
+  <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+
+    <div class="flex flex-col lg:flex-row justify-between gap-4">
+
+      <div>
+
+        <h2 class="text-3xl font-bold text-slate-800">
+          Staff Management
+        </h2>
+
+        <p class="text-slate-500 mt-2">
+          Monitor staff performance, collections, targets and accountability.
+        </p>
+
+      </div>
+
+      <button class="bg-brand text-white px-6 py-3 rounded-xl hover:bg-green-800 transition">
+        + Add New Staff
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+  <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <p class="text-slate-500 text-sm">Total Staff</p>
+      <h3 class="text-3xl font-bold mt-2">48</h3>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <p class="text-slate-500 text-sm">Active Staff</p>
+      <h3 class="text-3xl font-bold text-green-600 mt-2">42</h3>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <p class="text-slate-500 text-sm">Suspended</p>
+      <h3 class="text-3xl font-bold text-red-500 mt-2">3</h3>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <p class="text-slate-500 text-sm">Target Achievers</p>
+      <h3 class="text-3xl font-bold text-brand mt-2">31</h3>
+    </div>
+
+  </div>
+
+  <!-- STAFF TABLE -->
+  <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+
+    <div class="flex flex-col lg:flex-row justify-between gap-4 mb-6">
+
+      <input
+        type="text"
+        placeholder="Search staff..."
+        class="border border-slate-300 rounded-xl p-3 w-full lg:w-80">
+
+      <select class="border border-slate-300 rounded-xl p-3">
+        <option>All Departments</option>
+        <option>Field Officers</option>
+        <option>Account Officers</option>
+        <option>Customer Service</option>
+      </select>
+
+    </div>
+
+    <div class="overflow-x-auto">
+
+      <table class="w-full">
+
+        <thead>
+
+          <tr class="border-b">
+
+            <th class="text-left p-4">Staff</th>
+            <th class="text-left p-4">Department</th>
+            <th class="text-left p-4">Zone</th>
+            <th class="text-left p-4">Collections</th>
+            <th class="text-left p-4">Target</th>
+            <th class="text-left p-4">Status</th>
+            <th class="text-left p-4">Actions</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr class="border-b hover:bg-slate-50">
+
+            <td class="p-4">Tunde A.</td>
+            <td class="p-4">Field Officer</td>
+            <td class="p-4">Ikeja</td>
+            <td class="p-4">₦620,000</td>
+            <td class="p-4 text-green-600">112%</td>
+
+            <td class="p-4">
+              <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                Active
+              </span>
+            </td>
+
+            <td class="p-4">
+              <button class="text-brand font-medium">
+                View
+              </button>
+            </td>
+
+          </tr>
+
+          <tr class="border-b hover:bg-slate-50">
+
+            <td class="p-4">Bola K.</td>
+            <td class="p-4">Accounts</td>
+            <td class="p-4">Lekki</td>
+            <td class="p-4">₦410,000</td>
+            <td class="p-4 text-yellow-600">82%</td>
+
+            <td class="p-4">
+              <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+                Review
+              </span>
+            </td>
+
+            <td class="p-4">
+              <button class="text-brand font-medium">
+                View
+              </button>
+            </td>
+
+          </tr>
+
+          <tr class="hover:bg-slate-50">
+
+            <td class="p-4">Aisha M.</td>
+            <td class="p-4">Customer Service</td>
+            <td class="p-4">Main Office</td>
+            <td class="p-4">₦0</td>
+            <td class="p-4 text-red-600">45%</td>
+
+            <td class="p-4">
+              <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">
+                Suspended
+              </span>
+            </td>
+
+            <td class="p-4">
+              <button class="text-brand font-medium">
+                View
+              </button>
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <!-- PERFORMANCE + LEADERBOARD -->
+  <div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- TOP PERFORMERS -->
+    <div class="bg-white rounded-2xl shadow-sm p-6">
+
+      <h3 class="text-xl font-bold mb-5">
+        Top Performing Staff
+      </h3>
+
+      <div class="space-y-4">
+
+        <div class="flex justify-between items-center border-b pb-3">
+          <span>Tunde A.</span>
+          <span class="font-bold text-green-600">₦620,000</span>
+        </div>
+
+        <div class="flex justify-between items-center border-b pb-3">
+          <span>Segun B.</span>
+          <span class="font-bold text-green-600">₦590,000</span>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <span>Mary O.</span>
+          <span class="font-bold text-green-600">₦540,000</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- STAFF INSIGHTS -->
+    <div class="bg-white rounded-2xl shadow-sm p-6">
+
+      <h3 class="text-xl font-bold mb-5">
+        Staff Insights
+      </h3>
+
+      <div class="space-y-4">
+
+        <div class="bg-slate-50 rounded-xl p-4">
+          📈 31 staff exceeded monthly collection targets.
+        </div>
+
+        <div class="bg-slate-50 rounded-xl p-4">
+          🚨 3 staff accounts flagged for review.
+        </div>
+
+        <div class="bg-slate-50 rounded-xl p-4">
+          🎯 Overall team performance improved by 18%.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+</body>
+</html>
