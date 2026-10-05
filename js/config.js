@@ -6,6 +6,6 @@
 //
 // Find them in Supabase -> Project Settings -> API.
 // The same two values must also be set as Vercel environment variables
-// (https://gunxxydnpbzddaiubrze.supabase.co , sb_publishable_cM769aV5QmhOAj14_iDgvg_ekdyJIPD) so middleware.js can verify sessions.
+// (https://gunxxydnpbzddaiubrze.supabase.co, sb_publishable_cM769aV5QmhOAj14_iDgvg_ekdyJIPD) so middleware.js can verify sessions.
 export const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
 export const SUPABASE_ANON_KEY = 'YOUR-PUBLIC-ANON-KEY';
