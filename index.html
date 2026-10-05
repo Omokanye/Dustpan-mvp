@@ -1,6 +1,6 @@
 <!--
-  DUSTPAN — Login Page
-  Tech: HTML + Tailwind CSS (CDN) + Vanilla JS
+  DUSTPAN — Sign In
+  Tech: HTML + Tailwind CSS (CDN) + Vanilla JS (ES modules) + Supabase Auth
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -8,9 +8,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUSTPAN — Sign In</title>
+  <meta name="description" content="Trade in your plastics at Dustpan and earn Bitcoin rewards. Sign in to see your trade-ins and rewards." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css" />
-   <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <script>
     // Extend Tailwind theme with brand color
     tailwind.config = {
@@ -28,145 +29,193 @@
   </script>
 </head>
 <body class="min-h-screen bg-white text-slate-800">
+
   <!-- ========== TOP NAVBAR ========== -->
-<header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+  <header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
 
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-    <!-- LOGO -->
-    <a href="dashboard.html"
-      class="flex items-center gap-3">
-
-      <img src="assets/logo.png"
-        alt="Dustpan Logo"
-        class="w-12 h-12 object-contain" />
-
-      <div>
-        <h1 class="text-2xl font-bold text-green-700">
-          Dustpan
-        </h1>
-
-        <p class="text-xs text-slate-500">
-          Waste Recovery & Operations
-        </p>
-      </div>
-
-    </a>
-
-    <!-- NAVIGATION -->
-    <nav class="hidden md:flex items-center gap-4">
-
-      <!-- PSP OPERATOR -->
-      <a href="psp-register.html"
-        class="px-5 py-3 rounded-xl bg-green-700 text-white hover:bg-green-800 transition font-medium">
-
-        Register as PSP Operator
-
+      <!-- LOGO -->
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="Dustpan Logo" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
+        <div>
+          <span class="block text-xl sm:text-2xl font-bold text-green-700 leading-tight">Dustpan</span>
+          <span class="hidden sm:block text-xs text-slate-500">Plastics for Bitcoin rewards</span>
+        </div>
       </a>
 
-      <!-- STAFF -->
-      <a href="staff-register.html"
-        class="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium">
+      <!-- NAVIGATION -->
+      <nav class="flex items-center gap-2 sm:gap-3" aria-label="Main">
+        <a href="index.html"
+          class="px-3 sm:px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium text-sm sm:text-base">
+          Sign in
+        </a>
+        <a href="customer-signup.html"
+          class="px-3 sm:px-5 py-2.5 rounded-xl bg-green-700 text-white hover:bg-green-800 transition font-medium text-sm sm:text-base">
+          Create account
+        </a>
+      </nav>
 
-        Become a Staff
+    </div>
+  </header>
 
-      </a>
-
-      <!-- CUSTOMER -->
-      <a href="customer-signup.html"
-        class="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium">
-
-        Become a Customer
-
-      </a>
-
-      <!-- LOGIN -->
-      <a href="login.html"
-        class="px-5 py-3 rounded-xl bg-slate-900 text-white hover:bg-black transition font-medium">
-
-        Login
-
-      </a>
-
-    </nav>
-
-  </div>
-
-</header>
-
-  <!-- ============== LOGIN LAYOUT ============== -->
-  <main class="min-h-screen grid lg:grid-cols-2">
+  <!-- ============== SIGN-IN LAYOUT ============== -->
+  <main class="min-h-[calc(100vh-4.5rem)] grid lg:grid-cols-2">
 
     <!-- Left: Brand panel -->
     <section class="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-brand to-brand-dark text-white">
       <div class="flex items-center gap-3">
-        <img src="assets/logo.png" alt="Dustpan Logo" class="w-11 h-11 object-contain" />
+        <img src="assets/logo.png" alt="" class="w-11 h-11 object-contain" />
         <span class="text-2xl font-bold tracking-wide">DUSTPAN</span>
       </div>
+
       <div>
-        <h1 class="text-4xl font-bold leading-tight">Smart Waste Management Operations</h1>
-        <p class="mt-4 text-white/80 max-w-md">Track collections, manage customers, approve waivers, and monitor staff — all from one clean dashboard.</p>
+        <h1 class="text-4xl font-bold leading-tight">Turn your plastic into Bitcoin rewards</h1>
+        <p class="mt-4 text-white/80 max-w-md">
+          Bring your sorted plastics to a Dustpan drop-off point. We weigh them, and you earn
+          rewards for every trade-in.
+        </p>
+
+        <ol class="mt-8 space-y-4 max-w-md">
+          <li class="flex gap-4">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 grid place-items-center font-semibold">1</span>
+            <p><b>Sign up</b><br><span class="text-white/70 text-sm">Create your free account in a minute.</span></p>
+          </li>
+          <li class="flex gap-4">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 grid place-items-center font-semibold">2</span>
+            <p><b>Trade in your plastics</b><br><span class="text-white/70 text-sm">Drop them off and our team weighs them with you.</span></p>
+          </li>
+          <li class="flex gap-4">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 grid place-items-center font-semibold">3</span>
+            <p><b>Earn Bitcoin rewards</b><br><span class="text-white/70 text-sm">Track every trade-in and your rewards in one place.</span></p>
+          </li>
+        </ol>
       </div>
-      <p class="text-sm text-white/60">© 2026 DUSTPAN Operations</p>
+
+      <p class="text-sm text-white/60">© 2026 DUSTPAN</p>
     </section>
 
     <!-- Right: Sign-in form -->
     <section class="flex items-center justify-center p-6 sm:p-12">
       <div class="w-full max-w-md">
-        <div class="lg:hidden flex items-center gap-2 mb-8">
-          <img src="assets/logos.png" alt="Dustpan Logo" class="w-11 h-11 object-contain" />
-          <span class="text-xl font-bold text-brand">DUSTPAN</span>
-        </div>
 
         <h2 class="text-3xl font-bold text-slate-900">Welcome back</h2>
-        <p class="text-slate-500 mt-2">Sign in to your DUSTPAN account</p>
+        <p class="text-slate-500 mt-2">Sign in to see your plastic trade-ins and Bitcoin rewards.</p>
 
-        <form id="loginForm" class="mt-8 space-y-5">
+        <!-- Messages -->
+        <div id="notice" class="hidden mt-6 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 text-sm px-4 py-3" role="status"></div>
+        <div id="formError" class="hidden mt-6 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3" role="alert"></div>
+
+        <form id="loginForm" class="mt-8 space-y-5" novalidate>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-            <input type="email" required placeholder="you@dustpan.com"
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+            <input id="email" name="email" type="email" required autocomplete="username" inputmode="email"
+              placeholder="you@example.com"
               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
-            <input type="password" required placeholder="••••••••"
+            <label for="password" class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+            <input id="password" name="password" type="password" required autocomplete="current-password"
+              placeholder="••••••••"
               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
           </div>
 
-          <div class="flex items-center justify-between text-sm">
+          <div class="text-sm">
             <label class="flex items-center gap-2 text-slate-600">
-              <input type="checkbox" class="rounded text-brand focus:ring-brand" />
-              Remember me
+              <input id="remember" type="checkbox" checked class="rounded text-brand focus:ring-brand" />
+              Keep me signed in on this device
             </label>
-            <a href="#" class="text-brand hover:underline font-medium">Forgot password?</a>
           </div>
 
-          <button type="submit"
-            class="w-full py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark shadow-soft transition">
+          <button id="submitBtn" type="submit"
+            class="w-full py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark shadow-soft transition disabled:opacity-60 disabled:cursor-not-allowed">
             Sign In
           </button>
 
-          <div class="relative my-2">
-            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-            <div class="relative flex justify-center"><span class="bg-white px-3 text-xs text-slate-500">OR</span></div>
-          </div>
-
-          <button type="button"
-            class="w-full py-3 rounded-xl border border-slate-200 font-medium hover:bg-slate-50 flex items-center justify-center gap-2 transition">
-            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8a12 12 0 1 1 0-24c3 0 5.8 1.1 7.9 3l5.7-5.7A20 20 0 1 0 24 44c11 0 20-9 20-20 0-1.2-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8A12 12 0 0 1 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7A20 20 0 0 0 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2a12 12 0 0 1-18.6-5.6l-6.6 5.1A20 20 0 0 0 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2c-.4.4 6.6-4.8 6.6-14.8 0-1.2-.1-2.3-.4-3.5z"/></svg>
-            Continue with Google
-          </button>
-
           <p class="text-center text-sm text-slate-500">
-            Don't have an account?
-            <a href="#" class="text-brand font-semibold hover:underline">Contact admin</a>
+            New to Dustpan?
+            <a href="customer-signup.html" class="text-brand font-semibold hover:underline">Create your free account</a>
+          </p>
+
+          <p class="text-center text-xs text-slate-400">
+            Dustpan staff and operators sign in here too. Staff accounts are set up by your admin.
           </p>
         </form>
       </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script type="module">
+    import {
+      isConfigured, currentUser, signIn, signOut, roleOf, destinationFor, friendlyError
+    } from './js/auth.js';
+
+    const form = document.getElementById('loginForm');
+    const btn = document.getElementById('submitBtn');
+    const errorBox = document.getElementById('formError');
+    const notice = document.getElementById('notice');
+    const next = new URLSearchParams(location.search).get('next');
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.remove('hidden');
+    }
+    function showNotice(msg) {
+      notice.textContent = msg;
+      notice.classList.remove('hidden');
+    }
+
+    async function boot() {
+      if (!isConfigured) {
+        showNotice("Sign-in isn't switched on yet: the site owner still needs to add the Supabase details in js/config.js (see the README).");
+        btn.disabled = true;
+        return;
+      }
+
+      // A returning customer: their saved session signs them straight back in.
+      const user = await currentUser();
+      if (user) {
+        // If the server keeps bouncing us back here with ?next, stop instead of looping.
+        if (next) {
+          const last = Number(sessionStorage.getItem('dp_autoredirect') || 0);
+          if (Date.now() - last < 8000) {
+            await signOut();
+            showError("We couldn't verify your session. Please sign in again.");
+            return;
+          }
+          sessionStorage.setItem('dp_autoredirect', String(Date.now()));
+        }
+        location.replace(destinationFor(roleOf(user), next));
+        return;
+      }
+      if (next) showNotice('Please sign in to continue.');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.classList.add('hidden');
+
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      if (!email || !password) {
+        showError('Please enter your email and password.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+      try {
+        const user = await signIn(email, password, document.getElementById('remember').checked);
+        sessionStorage.removeItem('dp_autoredirect');
+        location.href = destinationFor(roleOf(user), next);
+      } catch (err) {
+        showError(friendlyError(err));
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      }
+    });
+
+    boot();
+  </script>
 </body>
 </html>

@@ -1,0 +1,207 @@
+<!--
+  DUSTPAN — Customer Sign Up
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUSTPAN — Create Account</title>
+  <meta name="description" content="Create your free Dustpan account to trade in plastics and earn Bitcoin rewards." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
+          boxShadow: { soft: '0 10px 30px -12px rgba(11,122,59,0.25)' }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800">
+
+  <header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="Dustpan Logo" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
+        <span class="text-xl sm:text-2xl font-bold text-green-700">Dustpan</span>
+      </a>
+      <nav class="flex items-center gap-2 sm:gap-3" aria-label="Main">
+        <a href="index.html"
+          class="px-3 sm:px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium text-sm sm:text-base">
+          Sign in
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-4 sm:px-6 py-8 sm:py-12">
+    <div class="max-w-xl mx-auto">
+
+      <!-- Sign-up form -->
+      <div id="formCard" class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6 sm:p-8">
+        <h1 class="text-3xl font-bold text-slate-900">Create your account</h1>
+        <p class="text-slate-500 mt-2">
+          Join Dustpan to trade in your plastics and earn Bitcoin rewards. We save your details so
+          you're recognised every time you come back.
+        </p>
+
+        <div id="notice" class="hidden mt-6 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 text-sm px-4 py-3" role="status"></div>
+        <div id="formError" class="hidden mt-6 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3" role="alert"></div>
+
+        <form id="signupForm" class="mt-8 space-y-5" novalidate>
+
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1.5">Full name</label>
+            <input id="fullName" name="fullName" type="text" required autocomplete="name" placeholder="e.g. Adaeze Okafor"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+          </div>
+
+          <div>
+            <label for="phone" class="block text-sm font-medium text-slate-700 mb-1.5">Phone number</label>
+            <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="e.g. 08012345678"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+            <p class="text-xs text-slate-500 mt-1">We use this to confirm your trade-ins.</p>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+            <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="you@example.com"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+          </div>
+
+          <div>
+            <label for="zone" class="block text-sm font-medium text-slate-700 mb-1.5">Your area</label>
+            <select id="zone" name="zone" required
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition">
+              <option value="">Choose your area…</option>
+              <option>Ikotun</option>
+              <option>Lekki</option>
+              <option>Yaba</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="address" class="block text-sm font-medium text-slate-700 mb-1.5">
+              Address <span class="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <textarea id="address" name="address" rows="2" autocomplete="street-address" placeholder="Street, landmark or estate"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition"></textarea>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="password" class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+              <input id="password" name="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"
+                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+            </div>
+            <div>
+              <label for="confirm" class="block text-sm font-medium text-slate-700 mb-1.5">Confirm password</label>
+              <input id="confirm" name="confirm" type="password" required minlength="8" autocomplete="new-password" placeholder="Type it again"
+                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+            </div>
+          </div>
+
+          <label class="flex items-start gap-3 text-sm text-slate-600">
+            <input id="consent" type="checkbox" required class="mt-1 rounded text-brand focus:ring-brand" />
+            <span>I agree to Dustpan saving my details to run my account, record my plastic trade-ins and pay my rewards.</span>
+          </label>
+
+          <button id="submitBtn" type="submit"
+            class="w-full py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark shadow-soft transition disabled:opacity-60 disabled:cursor-not-allowed">
+            Create account
+          </button>
+
+          <p class="text-center text-sm text-slate-500">
+            Already have an account?
+            <a href="index.html" class="text-brand font-semibold hover:underline">Sign in</a>
+          </p>
+        </form>
+      </div>
+
+      <!-- Shown when email confirmation is switched on in Supabase -->
+      <div id="confirmCard" class="hidden bg-white rounded-2xl border border-slate-100 shadow-soft p-8 text-center">
+        <div class="mx-auto w-14 h-14 rounded-full bg-brand/10 text-brand grid place-items-center text-2xl">✉️</div>
+        <h2 class="text-2xl font-bold text-slate-900 mt-5">Check your email</h2>
+        <p class="text-slate-500 mt-2">
+          We've sent a confirmation link to <b id="confirmEmail" class="text-slate-700"></b>.
+          Open it, then come back and sign in.
+        </p>
+        <a href="index.html" class="inline-block mt-6 px-6 py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark transition">Go to sign in</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script type="module">
+    import { isConfigured, currentUser, signUpCustomer, friendlyError, roleOf, destinationFor } from './js/auth.js';
+
+    const form = document.getElementById('signupForm');
+    const btn = document.getElementById('submitBtn');
+    const errorBox = document.getElementById('formError');
+    const notice = document.getElementById('notice');
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.remove('hidden');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Accepts local (0801…) and international (+234…) numbers.
+    const phoneOk = (v) => /^\+?[0-9][0-9\s-]{8,16}[0-9]$/.test(v);
+
+    if (!isConfigured) {
+      notice.textContent = "Sign-up isn't switched on yet: the site owner still needs to add the Supabase details in js/config.js (see the README).";
+      notice.classList.remove('hidden');
+      btn.disabled = true;
+    } else {
+      // Already signed in? No need to sign up again.
+      currentUser().then((user) => { if (user) location.replace(destinationFor(roleOf(user), null)); });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.classList.add('hidden');
+
+      const v = {
+        fullName: form.fullName.value.trim(),
+        phone: form.phone.value.trim(),
+        email: form.email.value.trim(),
+        zone: form.zone.value,
+        address: form.address.value.trim(),
+        password: form.password.value,
+      };
+
+      if (!v.fullName) return showError('Please enter your full name.');
+      if (!phoneOk(v.phone)) return showError('Please enter a valid phone number, for example 08012345678.');
+      if (!/^\S+@\S+\.\S+$/.test(v.email)) return showError('Please enter a valid email address.');
+      if (!v.zone) return showError('Please choose your area.');
+      if (v.password.length < 8) return showError('Your password needs at least 8 characters.');
+      if (v.password !== form.confirm.value) return showError("The two passwords don't match.");
+      if (!document.getElementById('consent').checked) return showError('Please tick the box to agree before continuing.');
+
+      btn.disabled = true;
+      btn.textContent = 'Creating your account…';
+      try {
+        const result = await signUpCustomer(v);
+        if (result.signedIn) {
+          location.href = 'account.html';
+        } else {
+          document.getElementById('confirmEmail').textContent = v.email;
+          document.getElementById('formCard').classList.add('hidden');
+          document.getElementById('confirmCard').classList.remove('hidden');
+        }
+      } catch (err) {
+        showError(friendlyError(err));
+        btn.disabled = false;
+        btn.textContent = 'Create account';
+      }
+    });
+  </script>
+</body>
+</html>

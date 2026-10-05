@@ -1,14 +1,5 @@
-/* DUSTPAN — Vanilla JS for login + dashboard interactions */
-
-// ----- Login form -----
-const loginForm = document.getElementById('loginForm');
-if (loginForm) {
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // Demo: redirect to dashboard
-    window.location.href = 'dashboard.html';
-  });
-}
+/* DUSTPAN — Vanilla JS for dashboard interactions.
+   (Sign-in lives in js/auth.js and index.html.) */
 
 // ----- Sidebar toggle (mobile) -----
 const menuBtn = document.getElementById('menuBtn');

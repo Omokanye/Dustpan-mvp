@@ -91,10 +91,10 @@
           🔔 <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
         <div class="flex items-center gap-2">
-          <div class="w-9 h-9 rounded-full bg-brand text-white grid place-items-center font-semibold">JD</div>
+          <div data-user-initials class="w-9 h-9 rounded-full bg-brand text-white grid place-items-center font-semibold">·</div>
           <div class="hidden sm:block leading-tight">
-            <p class="text-sm font-semibold">John Doe</p>
-            <p class="text-xs text-slate-500">Admin</p>
+            <p data-user-name class="text-sm font-semibold">&nbsp;</p>
+            <p data-user-role class="text-xs text-slate-500">&nbsp;</p>
           </div>
         </div>
       </div>
@@ -227,5 +227,6 @@
 </div>
 
 <script src="script.js"></script>
+<script type="module" src="js/session.js"></script>
 </body>
 </html>
