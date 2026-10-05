@@ -1,0 +1,185 @@
+<!--
+  DUSTPAN — My Account (customers)
+  Shows the customer's saved details and, soon, their plastic trade-ins and Bitcoin rewards.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUSTPAN — My Account</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
+          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800" data-session-pill="off">
+
+  <header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <a href="account.html" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="Dustpan Logo" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
+        <span class="text-xl sm:text-2xl font-bold text-green-700">Dustpan</span>
+      </a>
+      <button id="signOutBtn" type="button"
+        class="px-4 sm:px-5 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-black transition font-medium text-sm sm:text-base">
+        Sign out
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
+
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Welcome back, <span id="firstName">…</span></h1>
+      <p class="text-slate-500 mt-1">Here are your saved details and your Dustpan rewards.</p>
+    </div>
+
+    <div id="pageError" class="hidden rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3" role="alert"></div>
+
+    <section class="grid lg:grid-cols-5 gap-6">
+
+      <!-- Rewards -->
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-soft p-6 h-fit">
+        <h2 class="font-semibold text-lg">Your Bitcoin rewards</h2>
+        <div class="mt-4 rounded-xl bg-brand/5 border border-brand/10 p-5 text-center">
+          <p class="text-4xl font-bold text-brand">—</p>
+          <p class="text-sm text-slate-500 mt-1">Reward balance</p>
+        </div>
+        <p class="text-sm text-slate-600 mt-4">
+          No trade-ins yet. Bring sorted plastics to a Dustpan drop-off point. Once they're weighed,
+          your trade-ins and rewards will show up here.
+        </p>
+      </div>
+
+      <!-- Details -->
+      <div class="lg:col-span-3 bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
+        <h2 class="font-semibold text-lg">Your details</h2>
+
+        <div id="profileMissing" class="hidden mt-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 text-sm px-4 py-3">
+          We couldn't find your saved details. Please contact Dustpan support.
+        </div>
+
+        <form id="profileForm" class="mt-5 space-y-5 hidden" novalidate>
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1.5">Full name</label>
+            <input id="fullName" type="text" required autocomplete="name"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+            <input id="email" type="email" disabled
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-500" />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-slate-700 mb-1.5">Phone number</label>
+            <input id="phone" type="tel" required autocomplete="tel" inputmode="tel"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
+          </div>
+          <div>
+            <label for="zone" class="block text-sm font-medium text-slate-700 mb-1.5">Your area</label>
+            <select id="zone"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition">
+              <option value="">Choose your area…</option>
+              <option>Ikotun</option>
+              <option>Lekki</option>
+              <option>Yaba</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="address" class="block text-sm font-medium text-slate-700 mb-1.5">Address</label>
+            <textarea id="address" rows="2" autocomplete="street-address"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition"></textarea>
+          </div>
+
+          <div id="saveMsg" class="hidden rounded-xl text-sm px-4 py-3" role="status"></div>
+
+          <button id="saveBtn" type="submit"
+            class="px-6 py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark transition disabled:opacity-60 disabled:cursor-not-allowed">
+            Save changes
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/session.js"></script>
+  <script type="module">
+    import { currentUser, getProfile, updateProfile, signOut, friendlyError } from './js/auth.js';
+
+    const $ = (id) => document.getElementById(id);
+
+    $('signOutBtn').addEventListener('click', async () => {
+      await signOut();
+      location.href = 'index.html';
+    });
+
+    function showPageError(msg) {
+      $('pageError').textContent = msg;
+      $('pageError').classList.remove('hidden');
+    }
+
+    const user = await currentUser();
+    if (user) {
+      try {
+        const profile = await getProfile(user.id);
+        const name = profile?.full_name || user.user_metadata?.full_name || '';
+        $('firstName').textContent = name.split(' ')[0] || 'there';
+
+        if (!profile) {
+          $('profileMissing').classList.remove('hidden');
+        } else {
+          $('fullName').value = profile.full_name || '';
+          $('email').value = profile.email || user.email || '';
+          $('phone').value = profile.phone || '';
+          $('zone').value = profile.zone || '';
+          $('address').value = profile.address || '';
+          $('profileForm').classList.remove('hidden');
+        }
+
+        $('profileForm').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const msg = $('saveMsg');
+          const fullName = $('fullName').value.trim();
+          const phone = $('phone').value.trim();
+          const show = (text, ok) => {
+            msg.textContent = text;
+            msg.className = 'rounded-xl text-sm px-4 py-3 ' +
+              (ok ? 'border border-emerald-200 bg-emerald-50 text-emerald-700' : 'border border-red-200 bg-red-50 text-red-700');
+          };
+          if (!fullName) return show('Please enter your name.', false);
+          if (!/^\+?[0-9][0-9\s-]{8,16}[0-9]$/.test(phone)) return show('Please enter a valid phone number.', false);
+
+          $('saveBtn').disabled = true;
+          try {
+            await updateProfile(user.id, {
+              full_name: fullName,
+              phone,
+              zone: $('zone').value,
+              address: $('address').value.trim(),
+            });
+            $('firstName').textContent = fullName.split(' ')[0];
+            show('Your details have been saved.', true);
+          } catch (err) {
+            show(friendlyError(err), false);
+          } finally {
+            $('saveBtn').disabled = false;
+          }
+        });
+      } catch (err) {
+        showPageError("We couldn't load your details. " + friendlyError(err));
+      }
+    }
+  </script>
+</body>
+</html>

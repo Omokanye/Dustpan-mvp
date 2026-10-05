@@ -1,0 +1,13 @@
+{
+  "name": "dustpan-mvp",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Dustpan - waste recovery operations and plastics-for-Bitcoin rewards",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@vercel/functions": "^2.0.0"
+  }
+}
