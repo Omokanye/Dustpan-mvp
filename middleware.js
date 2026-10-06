@@ -1,32 +1,28 @@
 // DUSTPAN — server-side page protection (Vercel Routing Middleware)
 //
 // Runs on Vercel BEFORE any page is served, so a signed-out visitor never
-// receives the HTML of a protected page. (Hiding pages with client-side JS
-// alone would not be secure: anyone can bypass it.)
+// receives the HTML of a protected page.
 //
-// How it decides:
-//   1. Public pages + static assets (css/js/images)  -> allowed.
-//   2. Everything else needs a valid Supabase session. The browser stores the
-//      access token in the `dp_access` cookie (see js/auth.js); this file asks
-//      Supabase to confirm the token is genuine and unexpired.
-//   3. Role (from app_metadata.role, which users cannot edit themselves):
-//        customer                       -> only /account.html
-//        staff | admin | psp_operator   -> all operations pages
-//   Default-deny: any page not listed as public or customer-only is
-//   treated as an operations page.
-//
-// Required Vercel environment variables (Project -> Settings -> Environment Variables):
-//   SUPABASE_URL        e.g. https://abcdxyz.supabase.co
-//   SUPABASE_ANON_KEY   the project's public anon / publishable key
+// Required Vercel env vars:
+//   SUPABASE_URL
+//   SUPABASE_ANON_KEY
 
 import { next } from '@vercel/functions';
 
 const COOKIE_NAME = 'dp_access';
 const OPS_ROLES = new Set(['staff', 'admin', 'psp_operator']);
 
-// Paths are compared lower-case, without a trailing slash or ".html".
 const PUBLIC_PAGES = new Set(['/', '/index', '/login', '/customer-signup']);
-const CUSTOMER_PAGES = new Set(['/account']);
+const CUSTOMER_PAGES = new Set([
+  '/account',
+  '/wallet',
+  '/deposit',
+  '/transactions',
+  '/trade',
+  '/redeem',
+  '/impact',
+  '/profile',
+]);
 const STATIC_FILE = /\.(?:png|jpe?g|gif|svg|webp|ico|css|js|map|woff2?|ttf)$/;
 
 export const config = {
@@ -51,9 +47,6 @@ function readCookie(request, name) {
   return null;
 }
 
-// Normalise a request path so "/Dashboard.HTML", "/dashboard/" and
-// "//dashboard.html" are all judged as "/dashboard". Returns null if the
-// path can't be decoded (treated as protected).
 function normalise(pathname) {
   let p;
   try {
@@ -71,10 +64,6 @@ function pageKey(p) {
   return key || '/';
 }
 
-// Ask Supabase whether the token is valid. Returns:
-//   { ok: true, user }     token is valid
-//   { ok: false }          token missing/invalid/expired
-// Throws if Supabase can't be reached (we then fail closed with a 503).
 async function verifyToken(token) {
   const base = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
   const anon = process.env.SUPABASE_ANON_KEY || '';
@@ -93,16 +82,12 @@ export default async function middleware(request) {
   const url = new URL(request.url);
   const path = normalise(url.pathname);
 
-  // Undecodable path: never let it through.
   if (path === null) return redirect('/index.html');
-
-  // Static files (styles, scripts, images) carry no private data.
   if (STATIC_FILE.test(path)) return next();
 
   const key = pageKey(path);
   if (PUBLIC_PAGES.has(key)) return next();
 
-  // From here on the page is protected.
   const toLogin = () => redirect(`/index.html?next=${encodeURIComponent(path)}`);
 
   const token = readCookie(request, COOKIE_NAME);
@@ -113,7 +98,6 @@ export default async function middleware(request) {
     result = await verifyToken(token);
   } catch (err) {
     console.error('[dustpan] auth check unavailable:', err.message);
-    // Fail closed: don't serve the page if we can't verify the visitor.
     return new Response('Sign-in service is temporarily unavailable. Please try again shortly.', {
       status: 503,
       headers: noStore({ 'Content-Type': 'text/plain; charset=utf-8', 'Retry-After': '30' }),
@@ -124,8 +108,6 @@ export default async function middleware(request) {
   const role = result.user?.app_metadata?.role || 'customer';
 
   if (OPS_ROLES.has(role)) return next({ headers: noStore() });
-
-  // Customers: only their own account page.
   if (CUSTOMER_PAGES.has(key)) return next({ headers: noStore() });
   return redirect('/account.html');
 }
