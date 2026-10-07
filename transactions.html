@@ -1,38 +1,57 @@
 <!--
-  DUSTPAN — Transactions (placeholder page inside the customer shell)
+  DUSTPAN — Activity (customer page)
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DUSTPAN — Transactions</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>DUSTPAN — Activity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
-          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+<body class="dc-app" data-session-pill="off">
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
-    <h1 class="text-3xl font-bold text-slate-900">Transactions</h1>
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
-      <p class="font-semibold text-slate-900">Coming soon</p>
-      <p class="text-sm text-slate-500 mt-1">Your trade-ins and rewards will be listed here.</p>
+  <main class="dc-wrap">
+    <div class="dc-head">
+      <h1 class="dc-h1">Activity</h1>
+      <p class="dc-sub">Every DUST you earn or spend, newest first.</p>
     </div>
+
+    <div class="dc-alert err" id="loadError" hidden role="alert"></div>
+
+    <section class="dc-panel">
+      <ul class="dc-list" id="txList"></ul>
+      <div id="txEmpty" class="dc-empty" hidden>
+        <b>No activity yet</b>
+        <span>Deposit waste to earn your first DUST.</span>
+        <div class="dc-btn-row" style="justify-content:center"><a class="dc-btn" href="deposit.html">How to deposit</a></div>
+      </div>
+      <p class="dc-note" id="txMore" hidden style="margin-top:.75rem">Showing your latest 100.</p>
+    </section>
   </main>
 
   <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
+  <script type="module">
+    import { currentUser } from './js/auth.js';
+    import { loadTransactions, renderTransactions, walletError } from './js/wallet.js';
+    const $ = (id) => document.getElementById(id);
+    const user = await currentUser();
+    if (user) {
+      try {
+        const txs = await loadTransactions(user.id, 100);
+        if (txs.length) { renderTransactions($('txList'), txs); $('txMore').hidden = txs.length < 100; }
+        else $('txEmpty').hidden = false;
+      } catch (err) {
+        $('loadError').textContent = walletError(err);
+        $('loadError').hidden = false;
+      }
+    }
+  </script>
 </body>
 </html>

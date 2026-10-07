@@ -1,5 +1,5 @@
 <!--
-  DUSTPAN — Redeem (placeholder page inside the customer shell)
+  DUSTPAN — Redeem (customer page)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -7,32 +7,169 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUSTPAN — Redeem</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
-          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+<body class="dc-app" data-session-pill="off">
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
-    <h1 class="text-3xl font-bold text-slate-900">Redeem</h1>
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
-      <p class="font-semibold text-slate-900">Coming soon</p>
-      <p class="text-sm text-slate-500 mt-1">Ways to use your rewards will appear here.</p>
+  <main class="dc-wrap">
+    <div class="dc-head">
+      <h1 class="dc-h1">Redeem</h1>
+      <p class="dc-sub">Ask to turn your DUST into airtime, data, cash, a gift or a swap. Every request is reviewed first.</p>
+    </div>
+
+    <div class="dc-alert err" data-w-error hidden role="alert"></div>
+
+    <div class="dc-cols two">
+      <section class="dc-panel" aria-labelledby="reqTitle">
+        <h2 class="dc-h2" id="reqTitle">New request</h2>
+        <p class="dc-note" style="margin-top:.35rem">Available to redeem: <b><span data-w="available">—</span> DUST</b></p>
+
+        <form id="redeemForm" novalidate>
+          <div class="dc-field">
+            <label class="dc-label" for="type">What do you want?</label>
+            <select class="dc-input" id="type">
+              <option value="airtime">Airtime</option>
+              <option value="data">Data</option>
+              <option value="cash">Cash</option>
+              <option value="gift">Gift</option>
+              <option value="barter">Barter</option>
+            </select>
+          </div>
+          <div class="dc-field">
+            <label class="dc-label" for="amount">Amount (DUST)</label>
+            <input class="dc-input" id="amount" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0" />
+          </div>
+          <div class="dc-field">
+            <label class="dc-label" for="destination" id="destLabel">Phone number to top up</label>
+            <input class="dc-input" id="destination" type="text" maxlength="200" autocomplete="off" />
+          </div>
+          <div class="dc-field">
+            <label class="dc-label" for="note">Note (optional)</label>
+            <textarea class="dc-input" id="note" rows="2" maxlength="500"></textarea>
+          </div>
+
+          <div class="dc-alert info" style="margin-top:1rem">
+            Estimated value: <b id="estimate">—</b>. Fees may apply and are confirmed when your request is reviewed.
+          </div>
+          <div class="dc-alert err" id="formError" hidden role="alert"></div>
+          <div class="dc-alert ok" id="formOk" hidden role="status"></div>
+
+          <div class="dc-btn-row"><button class="dc-btn" id="submitBtn" type="submit">Send request</button></div>
+        </form>
+      </section>
+
+      <section class="dc-panel" aria-labelledby="recentTitle">
+        <h2 class="dc-h2" id="recentTitle">Your requests</h2>
+        <ul class="dc-list" id="reqList" style="margin-top:.5rem"></ul>
+        <div class="dc-empty" id="reqEmpty" hidden><b>No requests yet</b><span>Requests you send will show here as Pending until reviewed.</span></div>
+      </section>
     </div>
   </main>
 
   <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
+  <script type="module">
+    import { currentUser } from './js/auth.js';
+    import { loadWallet, paintWallet, loadRedemptions, requestRedemption, estNaira, fmtDust, fmtDate } from './js/wallet.js';
+
+    const $ = (id) => document.getElementById(id);
+    const TYPES = {
+      airtime: { label: 'Phone number to top up', placeholder: '08012345678', required: true },
+      data: { label: 'Phone number for the data bundle', placeholder: '08012345678', required: true },
+      cash: { label: 'Bank, account number and account name', placeholder: 'e.g. GTBank, 0123456789, Adaeze Okafor', required: true },
+      gift: { label: 'Delivery details (optional)', placeholder: '', required: false },
+      barter: { label: 'What would you like to swap for? (optional)', placeholder: '', required: false },
+    };
+
+    const user = await currentUser();
+    if (user) {
+      let view = await loadWallet(user);
+      const form = $('redeemForm');
+
+      function refreshNumbers() {
+        paintWallet(view);
+        const amount = Number($('amount').value);
+        $('estimate').textContent = amount > 0 && view.rate ? estNaira(amount, view.rate) : '—';
+        const cannot = Boolean(view.error) || view.summary.available <= 0;
+        $('submitBtn').disabled = cannot;
+        if (!view.error && view.summary.available <= 0) {
+          $('formError').textContent = 'You have no DUST to redeem yet. Deposit waste first.';
+          $('formError').hidden = false;
+        }
+      }
+      function syncType() {
+        const t = TYPES[$('type').value];
+        $('destLabel').textContent = t.label;
+        $('destination').placeholder = t.placeholder;
+      }
+      async function refreshRequests() {
+        const list = $('reqList');
+        list.replaceChildren();
+        try {
+          const rows = await loadRedemptions(user.id, 10);
+          $('reqEmpty').hidden = rows.length > 0;
+          for (const r of rows) {
+            const li = document.createElement('li');
+            li.className = 'dc-row';
+            li.innerHTML = '<div><div class="dc-row-title"></div><div class="dc-row-meta"></div></div><div class="dc-row-end"><div class="dc-amt"></div><span class="dc-badge"></span></div>';
+            li.querySelector('.dc-row-title').textContent = r.type.charAt(0).toUpperCase() + r.type.slice(1);
+            li.querySelector('.dc-row-meta').textContent = fmtDate(r.created_at);
+            li.querySelector('.dc-amt').textContent = fmtDust(r.amount_dust) + ' DUST';
+            const b = li.querySelector('.dc-badge');
+            b.className = 'dc-badge ' + r.status;
+            b.textContent = r.status.charAt(0).toUpperCase() + r.status.slice(1);
+            list.append(li);
+          }
+        } catch {
+          $('reqEmpty').hidden = false;
+          $('reqEmpty').innerHTML = '<b>Couldn\'t load your requests</b>';
+        }
+      }
+
+      $('type').addEventListener('change', syncType);
+      $('amount').addEventListener('input', refreshNumbers);
+      syncType();
+      refreshNumbers();
+      refreshRequests();
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        $('formError').hidden = true;
+        $('formOk').hidden = true;
+        const type = $('type').value;
+        const amount = Number($('amount').value);
+        const destination = $('destination').value.trim();
+        const fail = (m) => { $('formError').textContent = m; $('formError').hidden = false; };
+
+        if (!(amount > 0)) return fail('Enter how much DUST you want to redeem.');
+        if (amount > view.summary.available) return fail('That is more than your available DUST.');
+        if (TYPES[type].required && !destination) return fail('Add the phone number or bank details to send it to.');
+
+        $('submitBtn').disabled = true;
+        $('submitBtn').textContent = 'Sending…';
+        try {
+          await requestRedemption({ type, amount, destination, note: $('note').value.trim() });
+          $('formOk').textContent = 'Request sent. Its status is Pending. Nothing is paid until Dustpan reviews and approves it.';
+          $('formOk').hidden = false;
+          form.reset();
+          syncType();
+          view = await loadWallet(user);
+          refreshNumbers();
+          refreshRequests();
+        } catch (err) {
+          fail(err.message);
+          $('submitBtn').disabled = false;
+        } finally {
+          $('submitBtn').textContent = 'Send request';
+          if (!view.error && view.summary.available > 0) $('submitBtn').disabled = false;
+        }
+      });
+    }
+  </script>
 </body>
 </html>

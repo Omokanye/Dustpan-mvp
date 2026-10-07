@@ -1,39 +1,108 @@
 <!--
-  DUSTPAN — Profile / Settings (placeholder page inside the customer shell)
+  DUSTPAN — Settings (customer page)
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DUSTPAN — Profile / Settings</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>DUSTPAN — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
-          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+<body class="dc-app" data-session-pill="off">
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
-    <h1 class="text-3xl font-bold text-slate-900">Profile / Settings</h1>
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
-      <p class="font-semibold text-slate-900">Coming soon</p>
-      <p class="text-sm text-slate-500 mt-1">Your details are on the Dashboard.</p>
-      <a href="account.html#details" class="inline-block mt-4 px-5 py-2.5 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark transition">Edit my details</a>
+  <main class="dc-wrap">
+    <div class="dc-head">
+      <h1 class="dc-h1">Settings</h1>
+      <p class="dc-sub">Save changes only on Settings, not on the dashboard.</p>
     </div>
+
+    <section class="dc-panel" aria-labelledby="cidTitle">
+      <h2 class="dc-h2" id="cidTitle">Customer ID</h2>
+      <p class="dc-note" style="margin:.35rem 0 .75rem">Staff use this to credit your wallet. You can't change it.</p>
+      <div class="dc-tag light"><span data-cid>…</span><button type="button" class="dc-copy" data-copy-cid>Copy</button></div>
+    </section>
+
+    <section class="dc-panel dc-section" aria-labelledby="detailsTitle">
+      <h2 class="dc-h2" id="detailsTitle">Your details</h2>
+      <div class="dc-alert err" id="profileMissing" hidden>We couldn't find your saved details. Please contact Dustpan support.</div>
+      <div class="dc-alert err" id="pageError" hidden role="alert"></div>
+
+      <form id="profileForm" novalidate hidden>
+        <div class="dc-field"><label class="dc-label" for="fullName">Full name</label>
+          <input class="dc-input" id="fullName" type="text" required autocomplete="name" /></div>
+        <div class="dc-field"><label class="dc-label" for="email">Email</label>
+          <input class="dc-input" id="email" type="email" disabled />
+          <p class="dc-hint">This is your sign-in email. It can't be changed here.</p></div>
+        <div class="dc-field"><label class="dc-label" for="phone">Phone</label>
+          <input class="dc-input" id="phone" type="tel" required autocomplete="tel" inputmode="tel" /></div>
+        <div class="dc-field"><label class="dc-label" for="zone">Area</label>
+          <select class="dc-input" id="zone">
+            <option value="">Choose…</option><option>Ikotun</option><option>Lekki</option><option>Yaba</option><option>Other</option>
+          </select></div>
+        <div class="dc-field"><label class="dc-label" for="address">Address</label>
+          <textarea class="dc-input" id="address" rows="2" autocomplete="street-address"></textarea></div>
+
+        <div class="dc-alert" id="saveMsg" hidden role="status"></div>
+        <div class="dc-btn-row"><button class="dc-btn" id="saveBtn" type="submit">Save profile</button></div>
+      </form>
+    </section>
   </main>
 
   <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
+  <script type="module">
+    import { currentUser, getProfile, updateProfile, friendlyError } from './js/auth.js';
+    import { paintCustomerId } from './js/wallet.js';
+
+    const $ = (id) => document.getElementById(id);
+    const user = await currentUser();
+    if (user) {
+      try {
+        const profile = await getProfile(user.id);
+        paintCustomerId(profile?.customer_id || null);
+        if (!profile) {
+          $('profileMissing').hidden = false;
+        } else {
+          $('fullName').value = profile.full_name || '';
+          $('email').value = profile.email || user.email || '';
+          $('phone').value = profile.phone || '';
+          $('zone').value = profile.zone || '';
+          $('address').value = profile.address || '';
+          $('profileForm').hidden = false;
+        }
+      } catch (err) {
+        paintCustomerId(null);
+        $('pageError').textContent = "We couldn't load your details. " + friendlyError(err);
+        $('pageError').hidden = false;
+      }
+
+      $('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const msg = $('saveMsg');
+        const show = (text, ok) => { msg.textContent = text; msg.className = 'dc-alert ' + (ok ? 'ok' : 'err'); msg.hidden = false; };
+        const fullName = $('fullName').value.trim();
+        const phone = $('phone').value.trim();
+        if (!fullName) return show('Enter your name.', false);
+        if (!/^\+?[0-9][0-9\s-]{8,16}[0-9]$/.test(phone)) return show('Enter a valid phone number.', false);
+
+        $('saveBtn').disabled = true;
+        try {
+          await updateProfile(user.id, { full_name: fullName, phone, zone: $('zone').value, address: $('address').value.trim() });
+          show('Your profile has been saved.', true);
+        } catch (err) {
+          console.error('[dustpan] profile save:', err);
+          show(friendlyError(err), false);
+        } finally {
+          $('saveBtn').disabled = false;
+        }
+      });
+    }
+  </script>
 </body>
 </html>

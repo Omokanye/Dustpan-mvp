@@ -1,5 +1,5 @@
 <!--
-  DUSTPAN — Wallet (placeholder page inside the customer shell)
+  DUSTPAN — Wallet (customer page)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -7,32 +7,60 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUSTPAN — Wallet</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
-          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+<body class="dc-app" data-session-pill="off">
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
-    <h1 class="text-3xl font-bold text-slate-900">Wallet</h1>
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
-      <p class="font-semibold text-slate-900">Coming soon</p>
-      <p class="text-sm text-slate-500 mt-1">Your balance will appear here.</p>
+  <main class="dc-wrap">
+    <div class="dc-head">
+      <h1 class="dc-h1">Wallet</h1>
+      <p class="dc-sub">Your balance is worked out from verified activity. You can't change it here.</p>
     </div>
+
+    <div class="dc-alert err" data-w-error hidden role="alert"></div>
+
+    <section class="dc-hero" aria-label="Your Dustcoin balance">
+      <span class="dc-hero-label">Dustcoin balance</span>
+      <p class="dc-balance"><span data-w="balance">—</span><small>DUST</small></p>
+      <p class="dc-est">Estimated value <b data-w="est">—</b> <span class="dc-note" data-rate-note hidden>The ₦ estimate appears once Dustpan sets a rate.</span></p>
+    </section>
+
+    <div class="dc-stats">
+      <div class="dc-stat"><b data-w="earned">—</b><span>Total earned (DUST)</span></div>
+      <div class="dc-stat"><b data-w="available">—</b><span>Available (DUST)</span></div>
+      <div class="dc-stat"><b data-w="kg">—</b><span>Waste recovered</span></div>
+      <div class="dc-stat"><b data-w="pending">—</b><span>Pending requests</span></div>
+    </div>
+    <p class="dc-note" style="margin-top:.6rem">Available is your balance minus DUST held for pending redemptions.</p>
+
+    <div class="dc-btn-row">
+      <a class="dc-btn" href="deposit.html">Deposit waste</a>
+      <a class="dc-btn ghost" href="redeem.html">Redeem DUST</a>
+    </div>
+
+    <section class="dc-section">
+      <h2 class="dc-h2">How you earn</h2>
+      <ol class="dc-flow four">
+      <li><b>Collect</b><span>Gather clean, dry plastic bottles, containers and cans.</span></li>
+      <li><b>Drop off</b><span>Bring them to a Dustpan drop-off point and give staff your Customer ID.</span></li>
+      <li><b>Verify</b><span>Staff weigh and check your waste.</span></li>
+      <li><b>Earn</b><span>DUST is added to your wallet. You can see it in Activity.</span></li>
+    </ol>
+    </section>
   </main>
 
   <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
+  <script type="module">
+    import { currentUser } from './js/auth.js';
+    import { loadWallet, paintWallet } from './js/wallet.js';
+    const user = await currentUser();
+    if (user) paintWallet(await loadWallet(user));
+  </script>
 </body>
 </html>

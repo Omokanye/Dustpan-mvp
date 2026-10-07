@@ -5,6 +5,7 @@
 //   <link rel="stylesheet" href="Css/shell.css">
 //   <body class="dc-app" data-session-pill="off">
 //   <script type="module" src="js/shell.js"></script>      (before session.js)
+// Pages: Dashboard, Wallet, Deposit Waste, Activity, Trade, Redeem, Impact, Settings.
 //
 // To add or rename a link, edit LINKS below.
 
@@ -12,11 +13,11 @@ const LINKS = [
   ['account.html', 'Dashboard', 'home'],
   ['wallet.html', 'Wallet', 'wallet'],
   ['deposit.html', 'Deposit Waste', 'deposit'],
-  ['transactions.html', 'Transactions', 'list'],
+  ['transactions.html', 'Activity', 'list'],
   ['trade.html', 'Trade', 'trade'],
   ['redeem.html', 'Redeem', 'gift'],
   ['impact.html', 'Impact', 'leaf'],
-  ['profile.html', 'Profile / Settings', 'user'],
+  ['profile.html', 'Settings', 'user'],
 ];
 
 const ICONS = {
@@ -57,15 +58,31 @@ sidebar.innerHTML =
   ).join('') +
   '</nav>' +
   '<div class="dc-foot">' +
-  '<div class="dc-user" data-user-name></div>' +
+  '<div class="dc-user"><span data-user-name></span><span class="dc-cid" data-customer-id></span></div>' +
   `<button type="button" class="dc-link" data-signout>${svg('out')}<span>Sign out</span></button>` +
   '</div>';
+
+// Mobile bottom dock: the five things people use most (everything else is in the menu)
+const DOCK = [
+  ['account.html', 'Home', 'home'],
+  ['wallet.html', 'Wallet', 'wallet'],
+  ['deposit.html', 'Deposit', 'deposit'],
+  ['redeem.html', 'Redeem', 'gift'],
+  ['profile.html', 'Settings', 'user'],
+];
+const dock = document.createElement('nav');
+dock.className = 'dc-dock';
+dock.setAttribute('aria-label', 'Quick links');
+dock.innerHTML = DOCK.map(([href, label, icon]) =>
+  `<a href="${href}"${href === here ? ' aria-current="page"' : ''}>${svg(icon)}<span>${label}</span></a>`
+).join('');
 
 const overlay = document.createElement('div');
 overlay.className = 'dc-overlay';
 
 document.body.classList.add('has-shell');
 document.body.prepend(topbar, overlay, sidebar);
+document.body.append(dock);
 
 // Mobile drawer
 const burger = topbar.querySelector('.dc-burger');
