@@ -58,6 +58,25 @@ npm install
 npm test
 ```
 
+## Dustcoin wallet (customer pages)
+
+Customers see: **Dashboard, Wallet, Deposit Waste, Activity, Trade, Redeem, Impact, Settings**
+(`account`, `wallet`, `deposit`, `transactions`, `trade`, `redeem`, `impact`, `profile`).
+The sidebar lives in one file, `js/shell.js`. Data helpers are in `js/wallet.js`.
+
+**Turn it on:** run `supabase/wallet.sql` in the Supabase SQL editor (after `schema.sql`).
+Until then the pages show "—" and a friendly message instead of any numbers.
+
+**How the money works**
+- Everyone starts at 0 DUST / 0 kg. Balances are calculated from `transactions`; nobody can edit them in the browser.
+- Staff credit DUST after weighing and verifying waste. Look the customer up by their `DUST-XXXXXX` ID (example SQL at the bottom of `wallet.sql`).
+- Redeem creates a **Pending** request only (`request_redemption()`); nothing is ever marked paid by the app.
+- The Naira figure is an **estimate** from `app_settings.dust_ngn_rate`. Until you set a rate it shows "—".
+- Only **Settings** (`profile.html`) saves profile changes.
+
+**Quick test:** create an account (0 DUST, empty chart). Credit it from the SQL editor, reload (balance, kg and chart appear).
+Send a Redeem request (shows Pending, DUST is held). Open the pages on a phone width to check the bottom dock and menu.
+
 ## Known limits (next steps)
 
 - No "Forgot password" flow yet (add Supabase `resetPasswordForEmail` + a reset page).

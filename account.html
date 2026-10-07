@@ -1,168 +1,141 @@
 <!--
-  DUSTPAN — My Account (customers)
-  Shows the customer's saved details and, soon, their plastic trade-ins and Bitcoin rewards.
+  DUSTPAN — Dashboard (customer page)
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DUSTPAN — My Account</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>DUSTPAN — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
-          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+<body class="dc-app" data-session-pill="off">
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
-
-    <div>
-      <h1 class="text-3xl font-bold text-slate-900">Welcome back, <span id="firstName">…</span></h1>
-      <p class="text-slate-500 mt-1">Here are your saved details and your Dustpan rewards.</p>
+  <main class="dc-wrap">
+    <div class="dc-head">
+      <h1 class="dc-h1">Welcome back, <span id="firstName">…</span></h1>
+      <p class="dc-sub">This is your digital waste wallet.</p>
     </div>
 
-    <div id="pageError" class="hidden rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3" role="alert"></div>
+    <div class="dc-alert err" data-w-error hidden role="alert"></div>
 
-    <section class="grid lg:grid-cols-5 gap-6">
-
-      <!-- Rewards -->
-      <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-soft p-6 h-fit">
-        <h2 class="font-semibold text-lg">Your Bitcoin rewards</h2>
-        <div class="mt-4 rounded-xl bg-brand/5 border border-brand/10 p-5 text-center">
-          <p class="text-4xl font-bold text-brand">—</p>
-          <p class="text-sm text-slate-500 mt-1">Reward balance</p>
+    <section class="dc-hero" aria-label="Your Dustcoin wallet">
+      <div class="dc-hero-top">
+        <span class="dc-hero-label">Dustcoin balance</span>
+        <div class="dc-tag" title="Give this ID to staff at the drop-off point">
+          <span data-cid>…</span>
+          <button type="button" class="dc-copy" data-copy-cid>Copy</button>
         </div>
-        <p class="text-sm text-slate-600 mt-4">
-          No trade-ins yet. Bring sorted plastics to a Dustpan drop-off point. Once they're weighed,
-          your trade-ins and rewards will show up here.
-        </p>
       </div>
+      <p class="dc-balance"><span data-w="balance">—</span><small>DUST</small></p>
+      <p class="dc-est">Estimated value <b data-w="est">—</b> <span class="dc-note" data-rate-note hidden>The ₦ estimate appears once Dustpan sets a rate.</span></p>
+    </section>
 
-      <!-- Details -->
-      <div id="details" class="lg:col-span-3 bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
-        <h2 class="font-semibold text-lg">Your details</h2>
+    <div class="dc-stats" aria-label="Wallet totals">
+      <div class="dc-stat"><b data-w="earned">—</b><span>Total earned (DUST)</span></div>
+      <div class="dc-stat"><b data-w="available">—</b><span>Available (DUST)</span></div>
+      <div class="dc-stat"><b data-w="kg">—</b><span>Waste recovered</span></div>
+      <div class="dc-stat"><b data-w="pending">—</b><span>Pending requests</span></div>
+    </div>
 
-        <div id="profileMissing" class="hidden mt-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 text-sm px-4 py-3">
-          We couldn't find your saved details. Please contact Dustpan support.
-        </div>
+    <div class="dc-actions">
+      <a class="dc-btn" href="deposit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg> Deposit</a>
+      <a class="dc-btn ghost" href="redeem.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg> Redeem</a>
+      <a class="dc-btn ghost" href="trade.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4L3 8l4 4"/><path d="M3 8h14"/><path d="M17 20l4-4-4-4"/><path d="M21 16H7"/></svg> Trade</a>
+      <a class="dc-btn ghost" href="transactions.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg> Activity</a>
+      <a class="dc-btn ghost" href="profile.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Settings</a>
+    </div>
 
-        <form id="profileForm" class="mt-5 space-y-5 hidden" novalidate>
-          <div>
-            <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1.5">Full name</label>
-            <input id="fullName" type="text" required autocomplete="name"
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-            <input id="email" type="email" disabled
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-500" />
-          </div>
-          <div>
-            <label for="phone" class="block text-sm font-medium text-slate-700 mb-1.5">Phone number</label>
-            <input id="phone" type="tel" required autocomplete="tel" inputmode="tel"
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
-          </div>
-          <div>
-            <label for="zone" class="block text-sm font-medium text-slate-700 mb-1.5">Your area</label>
-            <select id="zone"
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition">
-              <option value="">Choose your area…</option>
-              <option>Ikotun</option>
-              <option>Lekki</option>
-              <option>Yaba</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div>
-            <label for="address" class="block text-sm font-medium text-slate-700 mb-1.5">Address</label>
-            <textarea id="address" rows="2" autocomplete="street-address"
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition"></textarea>
-          </div>
-
-          <div id="saveMsg" class="hidden rounded-xl text-sm px-4 py-3" role="status"></div>
-
-          <button id="saveBtn" type="submit"
-            class="px-6 py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark transition disabled:opacity-60 disabled:cursor-not-allowed">
-            Save changes
-          </button>
-        </form>
+    <section class="dc-panel dc-section" id="startPanel" hidden aria-labelledby="startTitle">
+      <h2 class="dc-h2" id="startTitle">Start here</h2>
+      <p class="dc-sub">You start at 0 DUST. Collect waste, drop it off, and staff verify it. Then you earn DUST to redeem or trade.</p>
+      <ul class="dc-check" id="checklist"></ul>
+      <div class="dc-btn-row">
+        <a class="dc-btn" href="deposit.html">Deposit waste</a>
+        <a class="dc-btn ghost" href="profile.html">Edit profile in Settings</a>
       </div>
     </section>
+
+    <div class="dc-cols two">
+      <section class="dc-panel" aria-labelledby="chartTitle">
+        <h2 class="dc-h2" id="chartTitle">DUST earned per week</h2>
+        <div id="chartHost" style="margin-top:.75rem"></div>
+      </section>
+      <section class="dc-panel" aria-labelledby="recentTitle">
+        <h2 class="dc-h2" id="recentTitle">Recent activity</h2>
+        <ul class="dc-list" id="recentList" style="margin-top:.5rem"></ul>
+        <div id="recentEmpty" class="dc-empty" hidden><b>No activity yet</b><span>Deposit waste to earn your first DUST.</span></div>
+        <p class="dc-note" style="margin-top:.75rem"><a href="transactions.html">See all activity</a> · <a href="profile.html">Edit profile in Settings</a></p>
+      </section>
+    </div>
   </main>
 
   <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
   <script type="module">
-    import { currentUser, getProfile, updateProfile, friendlyError } from './js/auth.js';
+    import { currentUser, getProfile } from './js/auth.js';
+    import { loadWallet, loadTransactions, paintWallet, paintCustomerId, renderTransactions, weeklyEarnings, renderEarningsChart, walletError } from './js/wallet.js';
 
     const $ = (id) => document.getElementById(id);
-
-    function showPageError(msg) {
-      $('pageError').textContent = msg;
-      $('pageError').classList.remove('hidden');
-    }
-
     const user = await currentUser();
+
     if (user) {
-      try {
-        const profile = await getProfile(user.id);
-        const name = profile?.full_name || user.user_metadata?.full_name || '';
-        $('firstName').textContent = name.split(' ')[0] || 'there';
+      const [profileRes, view, txRes] = await Promise.all([
+        getProfile(user.id).then((v) => ({ ok: true, v }), (e) => ({ ok: false, e })),
+        loadWallet(user),
+        loadTransactions(user.id, 200).then((v) => ({ ok: true, v }), (e) => ({ ok: false, e })),
+      ]);
 
-        if (!profile) {
-          $('profileMissing').classList.remove('hidden');
-        } else {
-          $('fullName').value = profile.full_name || '';
-          $('email').value = profile.email || user.email || '';
-          $('phone').value = profile.phone || '';
-          $('zone').value = profile.zone || '';
-          $('address').value = profile.address || '';
-          $('profileForm').classList.remove('hidden');
-        }
+      const profile = profileRes.ok ? profileRes.v : null;
+      const name = profile?.full_name || user.user_metadata?.full_name || '';
+      $('firstName').textContent = name.split(' ')[0] || 'there';
+      paintCustomerId(profile?.customer_id || null);
+      paintWallet(view);
 
-        $('profileForm').addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const msg = $('saveMsg');
-          const fullName = $('fullName').value.trim();
-          const phone = $('phone').value.trim();
-          const show = (text, ok) => {
-            msg.textContent = text;
-            msg.className = 'rounded-xl text-sm px-4 py-3 ' +
-              (ok ? 'border border-emerald-200 bg-emerald-50 text-emerald-700' : 'border border-red-200 bg-red-50 text-red-700');
-          };
-          if (!fullName) return show('Please enter your name.', false);
-          if (!/^\+?[0-9][0-9\s-]{8,16}[0-9]$/.test(phone)) return show('Please enter a valid phone number.', false);
-
-          $('saveBtn').disabled = true;
-          try {
-            await updateProfile(user.id, {
-              full_name: fullName,
-              phone,
-              zone: $('zone').value,
-              address: $('address').value.trim(),
-            });
-            $('firstName').textContent = fullName.split(' ')[0];
-            show('Your details have been saved.', true);
-          } catch (err) {
-            show(friendlyError(err), false);
-          } finally {
-            $('saveBtn').disabled = false;
-          }
-        });
-      } catch (err) {
-        showPageError("We couldn't load your details. " + friendlyError(err));
+      // Chart + recent activity: real transactions only
+      const chartHost = $('chartHost');
+      if (txRes.ok) {
+        renderEarningsChart(chartHost, weeklyEarnings(txRes.v));
+        const recent = txRes.v.slice(0, 5);
+        if (recent.length) renderTransactions($('recentList'), recent);
+        else $('recentEmpty').hidden = false;
+      } else {
+        chartHost.innerHTML = '<div class="dc-empty"><b>Couldn\'t load your activity</b><span>' + walletError(txRes.e) + '</span></div>';
+        $('recentEmpty').hidden = false;
+        $('recentEmpty').innerHTML = '<b>Couldn\'t load your activity</b>';
       }
+
+      // Start-here checklist (hidden once every step is done)
+      const txs = txRes.ok ? txRes.v : [];
+      const state = {
+        profile: Boolean(profile?.full_name && profile?.phone && profile?.zone),
+        copied: (() => { try { return localStorage.getItem('dc_copied_cid') === '1'; } catch { return false; } })(),
+        deposit: Boolean(view.summary && view.summary.deposits > 0) || txs.some((t) => t.kind === 'deposit'),
+        credit: Boolean(view.summary && view.summary.earned > 0),
+        used: txs.some((t) => t.kind === 'redeem' || t.kind === 'trade'),
+      };
+      const items = () => [
+        ['Complete your profile', state.profile, '<a href="profile.html">Open Settings</a>'],
+        ['Copy your Customer ID', state.copied, '<button type="button" data-copy-cid2>Copy ID</button>'],
+        ['Deposit waste', state.deposit, '<a href="deposit.html">How to deposit</a>'],
+        ['Get your first DUST credit', state.credit, ''],
+        ['Use your DUST', state.used, '<a href="redeem.html">Redeem</a>'],
+      ];
+      function drawChecklist() {
+        const all = items();
+        $('startPanel').hidden = !view.error && all.every((i) => i[1]) || Boolean(view.error);
+        $('checklist').innerHTML = all.map(([t, done, act]) =>
+          '<li data-done="' + done + '"><span class="dc-check-text">' + t + '</span>' + (done ? '' : act) + '</li>').join('');
+        const b = $('checklist').querySelector('[data-copy-cid2]');
+        if (b) b.addEventListener('click', () => document.querySelector('[data-copy-cid]')?.click());
+      }
+      drawChecklist();
+      document.addEventListener('dc:copied', () => { state.copied = true; drawChecklist(); });
     }
   </script>
 </body>

@@ -7,7 +7,7 @@
 //  - shows who is signed in, with a Sign out button
 //  - fills in elements marked data-user-name / data-user-initials / data-user-role
 
-import { currentUser, signOut, roleOf, displayName, OPS_ROLES } from './auth.js';
+import { currentUser, signOut, roleOf, displayName, getProfile, OPS_ROLES } from './auth.js';
 
 const here = location.pathname.split('/').pop() || 'index.html';
 
@@ -38,6 +38,21 @@ if (!user) {
     document.querySelectorAll('[data-user-name]').forEach((el) => (el.textContent = name));
     document.querySelectorAll('[data-user-initials]').forEach((el) => (el.textContent = initials(name)));
     document.querySelectorAll('[data-user-role]').forEach((el) => (el.textContent = label));
+
+    // Customer ID in the sidebar footer (cached for this tab, so it is fetched once)
+    const cidEls = document.querySelectorAll('[data-customer-id]');
+    if (cidEls.length) {
+      const key = `dc_cid:${user.id}`;
+      let cid = null;
+      try { cid = sessionStorage.getItem(key); } catch { /* ignore */ }
+      if (!cid) {
+        try {
+          cid = (await getProfile(user.id))?.customer_id || null;
+          if (cid) sessionStorage.setItem(key, cid);
+        } catch { /* the page itself shows profile errors */ }
+      }
+      cidEls.forEach((el) => { if (cid) el.textContent = cid; else el.hidden = true; });
+    }
 
     if (document.body.dataset.sessionPill !== 'off') {
       const pill = document.createElement('div');

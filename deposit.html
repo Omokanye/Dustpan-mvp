@@ -1,5 +1,5 @@
 <!--
-  DUSTPAN — Deposit Waste (placeholder page inside the customer shell)
+  DUSTPAN — Deposit Waste (customer page)
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -7,32 +7,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUSTPAN — Deposit Waste</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
-          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+<body class="dc-app" data-session-pill="off">
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
-    <h1 class="text-3xl font-bold text-slate-900">Deposit Waste</h1>
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
-      <p class="font-semibold text-slate-900">Coming soon</p>
-      <p class="text-sm text-slate-500 mt-1">Drop-offs will be recorded here.</p>
+  <main class="dc-wrap">
+    <div class="dc-head">
+      <h1 class="dc-h1">Deposit waste</h1>
+      <p class="dc-sub">Bring your waste to a Dustpan drop-off point. DUST is added after staff weigh and verify it.</p>
     </div>
+
+    <section class="dc-panel" aria-labelledby="cidTitle">
+      <h2 class="dc-h2" id="cidTitle">Your Customer ID</h2>
+      <p class="dc-note" style="margin:.35rem 0 .75rem">Give this to staff so they credit the right wallet.</p>
+      <div class="dc-tag light"><span data-cid>…</span><button type="button" class="dc-copy" data-copy-cid>Copy</button></div>
+    </section>
+
+    <section class="dc-section">
+      <h2 class="dc-h2">How it works</h2>
+      <ol class="dc-flow four">
+      <li><b>Collect</b><span>Gather clean, dry plastic bottles, containers and cans.</span></li>
+      <li><b>Drop off</b><span>Bring them to a Dustpan drop-off point and give staff your Customer ID.</span></li>
+      <li><b>Verify</b><span>Staff weigh and check your waste.</span></li>
+      <li><b>Earn</b><span>DUST is added to your wallet. You can see it in Activity.</span></li>
+    </ol>
+    </section>
+
+    <section class="dc-panel dc-section">
+      <h2 class="dc-h2">What we accept</h2>
+      <ul class="dc-chips">
+        <li>PET bottles</li><li>Other plastics</li><li>Aluminium cans</li>
+      </ul>
+      <p class="dc-note" style="margin-top:.75rem">Not sure about something? Ask staff at the drop-off point.</p>
+    </section>
+
+    <div class="dc-alert info">You can't add DUST yourself. Only waste that staff have weighed and verified is credited.</div>
   </main>
 
   <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
+  <script type="module">
+    import { currentUser, getProfile } from './js/auth.js';
+    import { paintCustomerId } from './js/wallet.js';
+    const user = await currentUser();
+    if (user) {
+      let cid = null;
+      try { cid = (await getProfile(user.id))?.customer_id || null; } catch { /* logged in getProfile */ }
+      paintCustomerId(cid);
+    }
+  </script>
 </body>
 </html>

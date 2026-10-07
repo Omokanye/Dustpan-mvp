@@ -155,12 +155,17 @@ export async function signOut() {
 
 // ---- stored customer details (table: public.profiles, protected by RLS) ----
 export async function getProfile(userId) {
-  const { data, error } = await requireClient()
-    .from('profiles')
-    .select('full_name, phone, email, zone, address, created_at')
-    .eq('id', userId)
-    .maybeSingle();
-  if (error) throw error;
+  const run = (cols) => requireClient().from('profiles').select(cols).eq('id', userId).maybeSingle();
+  let { data, error } = await run('full_name, phone, email, zone, address, created_at, customer_id');
+  // Before supabase/wallet.sql has been run there is no customer_id column: retry without it.
+  if (error && /customer_id/i.test(`${error.message} ${error.details || ''}`)) {
+    console.warn('[dustpan] profiles.customer_id is missing - run supabase/wallet.sql');
+    ({ data, error } = await run('full_name, phone, email, zone, address, created_at'));
+  }
+  if (error) {
+    console.error('[dustpan] profiles:', error);
+    throw error;
+  }
   return data;
 }
 
