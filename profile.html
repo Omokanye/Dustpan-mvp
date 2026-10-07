@@ -1,0 +1,39 @@
+<!--
+  DUSTPAN — Profile / Settings (placeholder page inside the customer shell)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUSTPAN — Profile / Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="Css/shell.css" />
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' } },
+          boxShadow: { soft: '0 4px 20px -8px rgba(15,23,42,0.08)' }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
+    <h1 class="text-3xl font-bold text-slate-900">Profile / Settings</h1>
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
+      <p class="font-semibold text-slate-900">Coming soon</p>
+      <p class="text-sm text-slate-500 mt-1">Your details are on the Dashboard.</p>
+      <a href="account.html#details" class="inline-block mt-4 px-5 py-2.5 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark transition">Edit my details</a>
+    </div>
+  </main>
+
+  <script type="module" src="js/shell.js"></script>
+  <script type="module" src="js/session.js"></script>
+</body>
+</html>
