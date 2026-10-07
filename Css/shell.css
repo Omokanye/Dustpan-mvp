@@ -1,0 +1,91 @@
+/* DUSTPAN customer shell: soft eco background + shared sidebar.
+   Opt in per page with <body class="dc-app">. The sidebar itself is built by js/shell.js. */
+
+:root {
+  --dc-brand: #0B7A3B;
+  --dc-brand-dark: #085C2C;
+  --dc-line: rgba(15, 23, 42, 0.08);
+  --dc-sidebar-w: 16rem;
+}
+
+/* ---- Background ---- */
+body.dc-app {
+  min-height: 100vh;
+  color: #1e293b;
+  background-color: #eef4f0;
+  background-image:
+    radial-gradient(900px 520px at 100% -8%, rgba(16, 160, 80, 0.14), transparent 62%),
+    radial-gradient(760px 480px at -8% 108%, rgba(11, 122, 59, 0.10), transparent 60%),
+    linear-gradient(180deg, #f5f9f6 0%, #e9f1ec 100%);
+  background-repeat: no-repeat;
+}
+/* Keep muted text readable on the tinted background */
+.dc-app .text-slate-500 { color: #475569; }
+
+/* ---- Sidebar (drawer on mobile, fixed on desktop) ---- */
+.dc-sidebar, .dc-topbar { box-sizing: border-box; }
+.dc-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 60;
+  width: var(--dc-sidebar-w);
+  max-width: 85vw;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-right: 1px solid var(--dc-line);
+  transform: translateX(-100%);
+  transition: transform 0.22s ease;
+}
+.dc-sidebar.is-open { transform: none; box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.35); }
+
+.dc-brand { display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0.5rem 1.25rem; text-decoration: none; }
+.dc-brand img { width: 2.5rem; height: 2.5rem; object-fit: contain; }
+.dc-brand span { font-size: 1.25rem; font-weight: 700; color: var(--dc-brand); }
+
+.dc-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+.dc-link {
+  display: flex; align-items: center; gap: 0.75rem;
+  width: 100%; padding: 0.7rem 0.85rem;
+  border: 0; border-radius: 0.75rem; background: none;
+  color: #334155; font: inherit; font-size: 0.95rem; font-weight: 500;
+  text-align: left; text-decoration: none; cursor: pointer;
+}
+.dc-link svg { width: 1.25rem; height: 1.25rem; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dc-link:hover { background: rgba(11, 122, 59, 0.07); color: var(--dc-brand-dark); }
+.dc-link[aria-current="page"] { background: rgba(11, 122, 59, 0.12); color: var(--dc-brand-dark); font-weight: 600; box-shadow: inset 3px 0 0 var(--dc-brand); }
+.dc-link:focus-visible, .dc-burger:focus-visible { outline: 2px solid var(--dc-brand); outline-offset: 2px; }
+
+.dc-foot { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--dc-line); }
+.dc-user { padding: 0 0.85rem 0.5rem; font-size: 0.8rem; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- Mobile top bar + overlay ---- */
+.dc-topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--dc-line);
+}
+.dc-topbar .dc-brand { padding: 0; }
+.dc-topbar .dc-brand img { width: 2rem; height: 2rem; }
+.dc-burger { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 1px solid var(--dc-line); border-radius: 0.75rem; background: #fff; color: #0f172a; cursor: pointer; }
+.dc-burger svg { width: 1.4rem; height: 1.4rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.dc-overlay { position: fixed; inset: 0; z-index: 55; background: rgba(15, 23, 42, 0.35); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.dc-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+/* ---- Desktop: sidebar always visible, content shifts right ---- */
+@media (min-width: 1024px) {
+  body.dc-app.has-shell { padding-left: var(--dc-sidebar-w); }
+  .dc-sidebar { transform: none; box-shadow: none; max-width: none; }
+  .dc-topbar, .dc-overlay { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dc-sidebar, .dc-overlay { transition: none; }
+}

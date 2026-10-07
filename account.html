@@ -10,6 +10,7 @@
   <title>DUSTPAN — My Account</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="Css/shell.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <script>
     tailwind.config = {
@@ -22,20 +23,7 @@
     };
   </script>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-800" data-session-pill="off">
-
-  <header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-      <a href="account.html" class="flex items-center gap-3">
-        <img src="assets/logo.png" alt="Dustpan Logo" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
-        <span class="text-xl sm:text-2xl font-bold text-green-700">Dustpan</span>
-      </a>
-      <button id="signOutBtn" type="button"
-        class="px-4 sm:px-5 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-black transition font-medium text-sm sm:text-base">
-        Sign out
-      </button>
-    </div>
-  </header>
+<body class="dc-app min-h-screen text-slate-800" data-session-pill="off">
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
 
@@ -62,7 +50,7 @@
       </div>
 
       <!-- Details -->
-      <div class="lg:col-span-3 bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
+      <div id="details" class="lg:col-span-3 bg-white rounded-2xl border border-slate-100 shadow-soft p-6">
         <h2 class="font-semibold text-lg">Your details</h2>
 
         <div id="profileMissing" class="hidden mt-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 text-sm px-4 py-3">
@@ -113,16 +101,12 @@
     </section>
   </main>
 
+  <script type="module" src="js/shell.js"></script>
   <script type="module" src="js/session.js"></script>
   <script type="module">
-    import { currentUser, getProfile, updateProfile, signOut, friendlyError } from './js/auth.js';
+    import { currentUser, getProfile, updateProfile, friendlyError } from './js/auth.js';
 
     const $ = (id) => document.getElementById(id);
-
-    $('signOutBtn').addEventListener('click', async () => {
-      await signOut();
-      location.href = 'index.html';
-    });
 
     function showPageError(msg) {
       $('pageError').textContent = msg;

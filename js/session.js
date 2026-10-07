@@ -11,6 +11,12 @@ import { currentUser, signOut, roleOf, displayName, OPS_ROLES } from './auth.js'
 
 const here = location.pathname.split('/').pop() || 'index.html';
 
+// Pages a customer may open (keep in step with CUSTOMER_PAGES in middleware.js)
+const CUSTOMER_PAGES = [
+  'account.html', 'wallet.html', 'deposit.html', 'transactions.html',
+  'trade.html', 'redeem.html', 'impact.html', 'profile.html',
+];
+
 function initials(name) {
   return name.split(/[\s@.]+/).filter(Boolean).slice(0, 2).map((s) => s[0].toUpperCase()).join('') || '?';
 }
@@ -23,7 +29,7 @@ if (!user) {
   const role = roleOf(user);
   const isOps = OPS_ROLES.includes(role);
 
-  if (!isOps && here !== 'account.html') {
+  if (!isOps && !CUSTOMER_PAGES.includes(here)) {
     location.replace('account.html');
   } else {
     const name = displayName(user);
