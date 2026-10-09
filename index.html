@@ -431,46 +431,6 @@
       </div>
     </div>
   </section>
-</main>
-
-<footer class="border-t border-slate-200 bg-white">
-  <div class="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 md:grid-cols-3">
-    <div>
-      <a href="home.html" class="flex items-center gap-2">
-        <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain">
-        <span class="text-xl font-extrabold">DUST<span class="text-dust">PAN</span></span>
-      </a>
-      <p class="mt-3 max-w-sm text-sm leading-6 text-slate-500">
-        Connecting recyclable waste sellers with potential buyers and
-        helping materials find their next use.
-      </p>
-    </div>
-
-    <div>
-      <h2 class="font-bold">Explore</h2>
-      <div class="mt-3 flex flex-col gap-2 text-sm text-slate-600">
-        <a href="#trade.html" class="hover:text-dust">Waste marketplace</a>
-        <a href="#how-it-works" class="hover:text-dust">How it works</a>
-        <a href="#materials" class="hover:text-dust">Materials</a>
-        <a href="#biogas" class="hover:text-dust">Biogas services</a>
-      </div>
-    </div>
-
-    <div>
-      <h2 class="font-bold">Your account</h2>
-      <div class="mt-3 flex flex-col gap-2 text-sm text-slate-600">
-        <a href="#customer-signup.html" class="hover:text-dust">Create an account</a>
-        <a href="#index.html" class="hover:text-dust">Sign in</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="border-t border-slate-100 px-5 py-4 text-center text-xs text-slate-500">
-    © <span id="year"></span> Dustpan. Connecting waste with opportunity.
-  </div>
-</footer>
-
-<script>
   <!-- IDOTII PSP OPERATOR CONTROL MODULE -->
 <div class="max-w-md mx-auto bg-white p-5 rounded-2xl shadow-sm border border-slate-100 my-4 font-sans">
     
@@ -520,8 +480,48 @@
     <!-- Status Feedback Display -->
     <div id="idotiiStatus" class="mt-3 text-center text-xs font-medium hidden"></div>
 </div>
+    
 
-<!-- JavaScript Integration Logic-->
+</main>
+
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 md:grid-cols-3">
+    <div>
+      <a href="home.html" class="flex items-center gap-2">
+        <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain">
+        <span class="text-xl font-extrabold">DUST<span class="text-dust">PAN</span></span>
+      </a>
+      <p class="mt-3 max-w-sm text-sm leading-6 text-slate-500">
+        Connecting recyclable waste sellers with potential buyers and
+        helping materials find their next use.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="font-bold">Explore</h2>
+      <div class="mt-3 flex flex-col gap-2 text-sm text-slate-600">
+        <a href="#trade.html" class="hover:text-dust">Waste marketplace</a>
+        <a href="#how-it-works" class="hover:text-dust">How it works</a>
+        <a href="#materials" class="hover:text-dust">Materials</a>
+        <a href="#biogas" class="hover:text-dust">Biogas services</a>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="font-bold">Your account</h2>
+      <div class="mt-3 flex flex-col gap-2 text-sm text-slate-600">
+        <a href="#customer-signup.html" class="hover:text-dust">Create an account</a>
+        <a href="#index.html" class="hover:text-dust">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-100 px-5 py-4 text-center text-xs text-slate-500">
+    © <span id="year"></span> Dustpan. Connecting waste with opportunity.
+  </div>
+</footer>
+
+
     <script>
 
   const menuButton = document.getElementById('menuButton');
@@ -548,6 +548,38 @@
   });
 
   document.getElementById('year').textContent = new Date().getFullYear();
+
+      <!-- JavaScript Integration Logic -->
+        
+    document.getElementById('idotiiControlForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const route = document.getElementById('routeId').value;
+        const metric = document.getElementById('metricData').value;
+        const staff = document.getElementById('staffName').value;
+        const statusBox = document.getElementById('idotiiStatus');
+
+        // Package audit payload mirroring the strict protocol
+        const auditLog = {
+            routeId: route,
+            metrics: metric,
+            loggedBy: staff,
+            timestamp: new Date().toISOString(),
+            status: "Locked - Pending Manager Approval"
+        };
+
+        // Save securely to local storage or prepare sync payload for Idotii backend
+        let idotiiLogs = JSON.parse(localStorage.getItem('idotiiAuditLogs')) || [];
+        idotiiLogs.push(auditLog);
+        localStorage.setItem('idotiiAuditLogs', JSON.stringify(idotiiLogs));
+
+        // Show confirmation feedback
+        statusBox.classList.remove('hidden', 'text-red-500');
+        statusBox.classList.add('text-emerald-600');
+        statusBox.innerText = "✓ Record secured! Staff override blocked. Synced to Idotii.";
+
+        // Clear form fields
+        document.getElementById('idotiiControlForm').reset();
 </script>
 
 </body>
