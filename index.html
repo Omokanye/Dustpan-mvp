@@ -1,221 +1,430 @@
-<!--
-  DUSTPAN — Sign In
-  Tech: HTML + Tailwind CSS (CDN) + Vanilla JS (ES modules) + Supabase Auth
--->
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NG">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DUSTPAN — Sign In</title>
-  <meta name="description" content="Trade in your plastics at Dustpan and earn Bitcoin rewards. Sign in to see your trade-ins and rewards." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Dustpan | Sell Recyclable Waste & Find Bulk Buyers in Nigeria</title>
+
+  <meta name="description" content="Connect with buyers and sellers of recyclable waste in Nigeria. Find PET bottle buyers, plastic waste buyers, bulk recyclable materials and waste-to-wealth opportunities in Kwara State.">
+
+  <meta name="keywords" content="sell recyclable waste in Nigeria, plastic waste buyers, PET bottle buyers, buy recyclable materials, waste trading, bulk waste buyers, waste collection Ilorin, waste to wealth, recycling business Nigeria">
+
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#087f65">
+  <link rel="canonical" href="https://dustpan-mvp.vercel.app/home.html">
   <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="style.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dustpan — Connect. Trade. Create Value.">
+  <meta property="og:description" content="Find buyers for recyclable waste or discover bulk recyclable materials from local suppliers.">
+  <meta property="og:url" content="https://dustpan-mvp.vercel.app/home.html">
+  <meta property="og:image" content="https://dustpan-mvp.vercel.app/assets/logo.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Extend Tailwind theme with brand color
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: { DEFAULT: '#0B7A3B', light: '#10A050', dark: '#085C2C' }
-          },
-          boxShadow: {
-            soft: '0 10px 30px -12px rgba(11,122,59,0.25)'
+            dust: {
+              DEFAULT: '#087f65',
+              dark: '#075b4b',
+              light: '#e7f8f3',
+              bright: '#12b981'
+            }
           }
         }
       }
     };
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Dustpan",
+    "url": "https://dustpan-mvp.vercel.app/",
+    "description": "A waste trading concierge connecting recyclable waste sellers with buyers.",
+    "inLanguage": "en-NG"
+  }
+  </script>
 </head>
-<body class="min-h-screen bg-white text-slate-800">
 
-  <!-- ========== TOP NAVBAR ========== -->
-  <header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+<body class="bg-white text-slate-800 antialiased">
 
-      <!-- LOGO -->
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="assets/logo.png" alt="Dustpan Logo" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
-        <div>
-          <span class="block text-xl sm:text-2xl font-bold text-green-700 leading-tight">Dustpan</span>
-          <span class="hidden sm:block text-xs text-slate-500">Plastics for Bitcoin rewards</span>
-        </div>
+<header class="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+
+    <a href="home.html" class="flex items-center gap-2" aria-label="Dustpan home">
+      <img src="assets/logo.png" alt="Dustpan recycling logo"
+           class="h-11 w-11 object-contain">
+      <span class="text-2xl font-extrabold tracking-tight">
+        DUST<span class="text-dust">PAN</span>
+      </span>
+    </a>
+
+    <nav id="mainNav"
+         class="hidden items-center gap-6 text-sm font-semibold md:flex"
+         aria-label="Main navigation">
+      <a href="#how-it-works" class="hover:text-dust">How it works</a>
+      <a href="#materials" class="hover:text-dust">Materials</a>
+      <a href="trade.html" class="hover:text-dust">Marketplace</a>
+      <a href="#biogas" class="hover:text-dust">Biogas services</a>
+      <a href="index.html"
+         class="rounded-xl border border-slate-200 px-4 py-2 hover:bg-slate-50">
+        Sign in
       </a>
+      <a href="customer-signup.html"
+         class="rounded-xl bg-dust px-4 py-2 text-white hover:bg-dust-dark">
+        Join Dustpan
+      </a>
+    </nav>
 
-      <!-- NAVIGATION -->
-      <nav class="flex items-center gap-2 sm:gap-3" aria-label="Main">
-        <a href="index.html"
-          class="px-3 sm:px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 transition font-medium text-sm sm:text-base">
-          Sign in
-        </a>
-        <a href="customer-signup.html"
-          class="px-3 sm:px-5 py-2.5 rounded-xl bg-green-700 text-white hover:bg-green-800 transition font-medium text-sm sm:text-base">
-          Create account
-        </a>
-      </nav>
+    <button id="menuButton" type="button"
+            class="rounded-lg border border-slate-200 px-3 py-2 text-xl md:hidden"
+            aria-label="Open navigation" aria-expanded="false"
+            aria-controls="mobileNav">
+      ☰
+    </button>
+  </div>
 
+  <nav id="mobileNav" class="hidden border-t border-slate-100 bg-white p-4 md:hidden"
+       aria-label="Mobile navigation">
+    <div class="flex flex-col gap-4 text-sm font-semibold">
+      <a href="#how-it-works">How it works</a>
+      <a href="#materials">Materials</a>
+      <a href="trade.html">Browse marketplace</a>
+      <a href="#biogas">Biogas services</a>
+      <a href="index.html">Sign in</a>
+      <a href="customer-signup.html" class="text-dust">Create an account</a>
     </div>
-  </header>
+  </nav>
+</header>
 
-  <!-- ============== SIGN-IN LAYOUT ============== -->
-  <main class="min-h-[calc(100vh-4.5rem)] grid lg:grid-cols-2">
-
-    <!-- Left: Brand panel -->
-    <section class="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-brand to-brand-dark text-white">
-      <div class="flex items-center gap-3">
-        <img src="assets/logo.png" alt="" class="w-11 h-11 object-contain" />
-        <span class="text-2xl font-bold tracking-wide">DUSTPAN</span>
-      </div>
+<main>
+  <!-- HERO -->
+  <section class="bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 md:grid-cols-2 md:px-8 md:py-24">
 
       <div>
-        <h1 class="text-4xl font-bold leading-tight">Turn your plastic into Bitcoin rewards</h1>
-        <p class="mt-4 text-white/80 max-w-md">
-          Bring your sorted plastics to a Dustpan drop-off point. We weigh them, and you earn
-          rewards for every trade-in.
+        <p class="mb-4 inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-bold text-dust-dark">
+          Waste trading, made easier
         </p>
 
-        <ol class="mt-8 space-y-4 max-w-md">
-          <li class="flex gap-4">
-            <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 grid place-items-center font-semibold">1</span>
-            <p><b>Sign up</b><br><span class="text-white/70 text-sm">Create your free account in a minute.</span></p>
-          </li>
-          <li class="flex gap-4">
-            <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 grid place-items-center font-semibold">2</span>
-            <p><b>Trade in your plastics</b><br><span class="text-white/70 text-sm">Drop them off and our team weighs them with you.</span></p>
-          </li>
-          <li class="flex gap-4">
-            <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 grid place-items-center font-semibold">3</span>
-            <p><b>Earn Bitcoin rewards</b><br><span class="text-white/70 text-sm">Track every trade-in and your rewards in one place.</span></p>
-          </li>
-        </ol>
+        <h1 class="text-4xl font-black leading-tight tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+          Your waste has value.
+          <span class="text-dust">Let's find its buyer.</span>
+        </h1>
+
+        <p class="mt-5 max-w-xl text-lg leading-8 text-slate-600">
+          Dustpan connects people and businesses with recyclable waste
+          to potential buyers. Tell us what you have, discover supply,
+          and take the next step towards a deal.
+        </p>
+
+        <div class="mt-8 grid gap-3 sm:grid-cols-2">
+          <a href="customer-signup.html"
+             class="rounded-2xl bg-dust px-5 py-4 text-center font-bold text-white shadow-lg shadow-emerald-900/10 hover:bg-dust-dark">
+            ♻️ I Want to Sell Waste
+            <span class="mt-1 block text-sm font-normal text-white/85">
+              Connect with potential buyers
+            </span>
+          </a>
+
+          <a href="trade.html"
+             class="rounded-2xl border-2 border-dust bg-white px-5 py-4 text-center font-bold text-dust hover:bg-emerald-50">
+            🔎 I Want to Buy Waste
+            <span class="mt-1 block text-sm font-normal text-slate-500">
+              Explore the marketplace
+            </span>
+          </a>
+        </div>
+
+        <p class="mt-4 text-sm text-slate-500">
+          Start with your material, quantity and location. Agree on price
+          and pickup arrangements directly with the other party.
+        </p>
       </div>
 
-      <p class="text-sm text-white/60">© 2026 DUSTPAN</p>
-    </section>
+      <div class="relative">
+        <div class="rounded-3xl border border-emerald-100 bg-white p-4 shadow-xl shadow-emerald-900/5 sm:p-7">
+          <img src="assets/logo.png"
+               alt="Dustpan waste-to-value platform"
+               class="mx-auto h-24 w-24 object-contain">
 
-    <!-- Right: Sign-in form -->
-    <section class="flex items-center justify-center p-6 sm:p-12">
-      <div class="w-full max-w-md">
+          <h2 class="mt-3 text-center text-2xl font-extrabold">
+            From waste to opportunity
+          </h2>
 
-        <h2 class="text-3xl font-bold text-slate-900">Welcome back</h2>
-        <p class="text-slate-500 mt-2">Sign in to see your plastic trade-ins and Bitcoin rewards.</p>
-
-        <!-- Messages -->
-        <div id="notice" class="hidden mt-6 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 text-sm px-4 py-3" role="status"></div>
-        <div id="formError" class="hidden mt-6 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3" role="alert"></div>
-
-        <form id="loginForm" class="mt-8 space-y-5" novalidate>
-          <div>
-            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-            <input id="email" name="email" type="email" required autocomplete="username" inputmode="email"
-              placeholder="you@example.com"
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
-          </div>
-
-          <div>
-            <label for="password" class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
-            <input id="password" name="password" type="password" required autocomplete="current-password"
-              placeholder="••••••••"
-              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition" />
-          </div>
-
-          <div class="text-sm">
-            <label class="flex items-center gap-2 text-slate-600">
-              <input id="remember" type="checkbox" checked class="rounded text-brand focus:ring-brand" />
-              Keep me signed in on this device
-            </label>
-          </div>
-
-          <button id="submitBtn" type="submit"
-            class="w-full py-3 rounded-xl bg-brand text-white font-semibold hover:bg-brand-dark shadow-soft transition disabled:opacity-60 disabled:cursor-not-allowed">
-            Sign In
-          </button>
-
-          <p class="text-center text-sm text-slate-500">
-            New to Dustpan?
-            <a href="customer-signup.html" class="text-brand font-semibold hover:underline">Create your free account</a>
+          <p class="mt-2 text-center text-slate-500">
+            One connection can help waste reach the right buyer.
           </p>
 
-          <p class="text-center text-xs text-slate-400">
-            Dustpan staff and operators sign in here too. Staff accounts are set up by your admin.
-          </p>
-        </form>
+          <div class="mt-6 space-y-3">
+            <div class="flex items-center gap-4 rounded-xl bg-emerald-50 p-4">
+              <span class="text-2xl">📦</span>
+              <div>
+                <p class="font-bold">List available materials</p>
+                <p class="text-sm text-slate-600">Describe your stock and quantity.</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-4">
+              <span class="text-2xl">🤝</span>
+              <div>
+                <p class="font-bold">Connect with a buyer</p>
+                <p class="text-sm text-slate-600">Discuss pricing and collection.</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 rounded-xl bg-emerald-50 p-4">
+              <span class="text-2xl">🌍</span>
+              <div>
+                <p class="font-bold">Keep materials in circulation</p>
+                <p class="text-sm text-slate-600">Support recycling and resource recovery.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
 
-  <script type="module">
-    import {
-      isConfigured, currentUser, signIn, signOut, roleOf, destinationFor, friendlyError
-    } from './js/auth.js';
+    </div>
+  </section>
 
-    const form = document.getElementById('loginForm');
-    const btn = document.getElementById('submitBtn');
-    const errorBox = document.getElementById('formError');
-    const notice = document.getElementById('notice');
-    const next = new URLSearchParams(location.search).get('next');
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="font-bold uppercase tracking-widest text-dust">Simple process</p>
+      <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">
+        Waste trading without the guesswork
+      </h2>
+      <p class="mt-4 text-slate-600">
+        Dustpan helps buyers and sellers discover each other without
+        requiring the platform to own every load of waste.
+      </p>
+    </div>
 
-    function showError(msg) {
-      errorBox.textContent = msg;
-      errorBox.classList.remove('hidden');
-    }
-    function showNotice(msg) {
-      notice.textContent = msg;
-      notice.classList.remove('hidden');
-    }
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 p-6">
+        <span class="text-3xl">01</span>
+        <h3 class="mt-4 text-xl font-bold">Describe your stock</h3>
+        <p class="mt-2 leading-7 text-slate-600">
+          Share the material type, available quantity, condition,
+          price expectations and pickup location.
+        </p>
+      </article>
 
-    async function boot() {
-      if (!isConfigured) {
-        showNotice("Sign-in isn't switched on yet: the site owner still needs to add the Supabase details in js/config.js (see the README).");
-        btn.disabled = true;
-        return;
-      }
+      <article class="rounded-2xl border border-slate-200 p-6">
+        <span class="text-3xl">02</span>
+        <h3 class="mt-4 text-xl font-bold">Find the right connection</h3>
+        <p class="mt-2 leading-7 text-slate-600">
+          Buyers discover potential suppliers. Sellers can connect with
+          businesses looking for recyclable materials.
+        </p>
+      </article>
 
-      // A returning customer: their saved session signs them straight back in.
-      const user = await currentUser();
-      if (user) {
-        // If the server keeps bouncing us back here with ?next, stop instead of looping.
-        if (next) {
-          const last = Number(sessionStorage.getItem('dp_autoredirect') || 0);
-          if (Date.now() - last < 8000) {
-            await signOut();
-            showError("We couldn't verify your session. Please sign in again.");
-            return;
-          }
-          sessionStorage.setItem('dp_autoredirect', String(Date.now()));
-        }
-        location.replace(destinationFor(roleOf(user), next));
-        return;
-      }
-      if (next) showNotice('Please sign in to continue.');
-    }
+      <article class="rounded-2xl border border-slate-200 p-6">
+        <span class="text-3xl">03</span>
+        <h3 class="mt-4 text-xl font-bold">Agree and arrange pickup</h3>
+        <p class="mt-2 leading-7 text-slate-600">
+          Discuss the final price, verify the material, agree on terms
+          and arrange collection from the seller's location.
+        </p>
+      </article>
+    </div>
+  </section>
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      errorBox.classList.add('hidden');
+  <!-- MATERIALS -->
+  <section id="materials" class="bg-slate-50 py-16">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div>
+          <p class="font-bold uppercase tracking-widest text-dust">What do you trade?</p>
+          <h2 class="mt-2 text-3xl font-black text-slate-950">
+            Recyclable materials and bulk supply
+          </h2>
+        </div>
+        <a href="trade.html" class="font-bold text-dust hover:underline">
+          Explore marketplace →
+        </a>
+      </div>
 
-      const email = form.email.value.trim();
-      const password = form.password.value;
-      if (!email || !password) {
-        showError('Please enter your email and password.');
-        return;
-      }
+      <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+          <p class="text-3xl">🧴</p>
+          <h3 class="mt-3 font-bold">PET bottles</h3>
+          <p class="mt-1 text-sm text-slate-500">Plastic bottle recovery</p>
+        </article>
 
-      btn.disabled = true;
-      btn.textContent = 'Signing in…';
-      try {
-        const user = await signIn(email, password, document.getElementById('remember').checked);
-        sessionStorage.removeItem('dp_autoredirect');
-        location.href = destinationFor(roleOf(user), next);
-      } catch (err) {
-        showError(friendlyError(err));
-        btn.disabled = false;
-        btn.textContent = 'Sign In';
-      }
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+          <p class="text-3xl">♻️</p>
+          <h3 class="mt-3 font-bold">Plastics</h3>
+          <p class="mt-1 text-sm text-slate-500">Sorted plastic materials</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+          <p class="text-3xl">🥫</p>
+          <h3 class="mt-3 font-bold">Aluminium</h3>
+          <p class="mt-1 text-sm text-slate-500">Cans and scrap metal</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+          <p class="text-3xl">📦</p>
+          <h3 class="mt-3 font-bold">Cardboard</h3>
+          <p class="mt-1 text-sm text-slate-500">Paper and cartons</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+          <p class="text-3xl">🔩</p>
+          <h3 class="mt-3 font-bold">Metal scraps</h3>
+          <p class="mt-1 text-sm text-slate-500">Reusable metal stock</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+          <p class="text-3xl">🏭</p>
+          <h3 class="mt-3 font-bold">Bulk supply</h3>
+          <p class="mt-1 text-sm text-slate-500">For recyclers and businesses</p>
+        </article>
+      </div>
+
+      <p class="mt-5 text-sm text-slate-500">
+        Material availability depends on current seller listings. Confirm
+        material quality, quantity and price before arranging collection.
+      </p>
+    </div>
+  </section>
+
+  <!-- SELLER / BUYER CTA -->
+  <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <div class="grid gap-6 md:grid-cols-2">
+      <article class="rounded-3xl bg-dust p-7 text-white sm:p-10">
+        <p class="font-bold uppercase tracking-widest text-emerald-100">For sellers</p>
+        <h2 class="mt-3 text-3xl font-black">Have waste in stock?</h2>
+        <p class="mt-4 leading-7 text-white/90">
+          Whether you are an individual collector, retailer, wholesaler
+          or waste aggregator, Dustpan helps you move towards potential buyers.
+        </p>
+        <a href="customer-signup.html"
+           class="mt-6 inline-flex rounded-xl bg-white px-5 py-3 font-bold text-dust hover:bg-emerald-50">
+          Start selling →
+        </a>
+      </article>
+
+      <article class="rounded-3xl border border-slate-200 bg-white p-7 sm:p-10">
+        <p class="font-bold uppercase tracking-widest text-dust">For buyers</p>
+        <h2 class="mt-3 text-3xl font-black">Looking for bulk materials?</h2>
+        <p class="mt-4 leading-7 text-slate-600">
+          Find potential suppliers of recyclable materials for your recycling,
+          manufacturing or waste recovery business.
+        </p>
+        <a href="trade.html"
+           class="mt-6 inline-flex rounded-xl bg-dust px-5 py-3 font-bold text-white hover:bg-dust-dark">
+          Find suppliers →
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- BIOGAS -->
+  <section id="biogas" class="bg-emerald-50 py-14">
+    <div class="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-8 md:grid-cols-2">
+      <div>
+        <p class="font-bold uppercase tracking-widest text-dust">Beyond recycling</p>
+        <h2 class="mt-3 text-3xl font-black text-slate-950">
+          Turn organic waste into an energy opportunity
+        </h2>
+        <p class="mt-4 leading-7 text-slate-600">
+          Interested in biogas solutions for a home, farm or business?
+          Contact our team to discuss your organic waste and energy needs.
+          Suitable systems and savings depend on a professional assessment.
+        </p>
+        <a href="mailto:YOUR_BUSINESS_EMAIL"
+           class="mt-6 inline-flex rounded-xl bg-dust px-5 py-3 font-bold text-white hover:bg-dust-dark">
+          Request a consultation →
+        </a>
+        <p class="mt-3 text-xs text-slate-500">
+          Replace YOUR_BUSINESS_EMAIL with your verified business email before publishing.
+        </p>
+      </div>
+
+      <div class="rounded-3xl border border-emerald-200 bg-white p-8 text-center">
+        <p class="text-6xl">🌱</p>
+        <h3 class="mt-4 text-2xl font-extrabold">Waste to useful energy</h3>
+        <p class="mt-3 leading-7 text-slate-600">
+          Explore biogas services for suitable organic waste streams.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 md:grid-cols-3">
+    <div>
+      <a href="home.html" class="flex items-center gap-2">
+        <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain">
+        <span class="text-xl font-extrabold">DUST<span class="text-dust">PAN</span></span>
+      </a>
+      <p class="mt-3 max-w-sm text-sm leading-6 text-slate-500">
+        Connecting recyclable waste sellers with potential buyers and
+        helping materials find their next use.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="font-bold">Explore</h2>
+      <div class="mt-3 flex flex-col gap-2 text-sm text-slate-600">
+        <a href="trade.html" class="hover:text-dust">Waste marketplace</a>
+        <a href="#how-it-works" class="hover:text-dust">How it works</a>
+        <a href="#materials" class="hover:text-dust">Materials</a>
+        <a href="#biogas" class="hover:text-dust">Biogas services</a>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="font-bold">Your account</h2>
+      <div class="mt-3 flex flex-col gap-2 text-sm text-slate-600">
+        <a href="customer-signup.html" class="hover:text-dust">Create an account</a>
+        <a href="index.html" class="hover:text-dust">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-100 px-5 py-4 text-center text-xs text-slate-500">
+    © <span id="year"></span> Dustpan. Connecting waste with opportunity.
+  </div>
+</footer>
+
+<script>
+  const menuButton = document.getElementById('menuButton');
+  const mobileNav = document.getElementById('mobileNav');
+
+  menuButton.addEventListener('click', () => {
+    const isOpen = !mobileNav.classList.contains('hidden');
+    mobileNav.classList.toggle('hidden');
+    menuButton.setAttribute('aria-expanded', String(!isOpen));
+    menuButton.setAttribute(
+      'aria-label',
+      isOpen ? 'Open navigation' : 'Close navigation'
+    );
+    menuButton.textContent = isOpen ? '☰' : '✕';
+  });
+
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.add('hidden');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Open navigation');
+      menuButton.textContent = '☰';
     });
+  });
 
-    boot();
-  </script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
+```
